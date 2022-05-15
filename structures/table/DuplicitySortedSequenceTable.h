@@ -20,8 +20,8 @@ public:
 
     void tryFind(K& key, T& data);
 
-protected:
-    ArrayList<TableItem<K, T>*> findTableItems(const K& key);
+public:
+    ArrayList<TableItem<K, T>*>* findTableItems(const K& key);
 };
 
 template<typename T, typename K>
@@ -63,7 +63,7 @@ DuplicitySortedSequenceTable<T, K>::DuplicitySortedSequenceTable() : structures:
 }
 
 template<typename T, typename K>
-ArrayList<TableItem<K, T>*> DuplicitySortedSequenceTable<T, K>::findTableItems(const K& key)
+ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<T, K>::findTableItems(const K& key)
 {
     auto results = new ArrayList<TableItem<K, T>*>();
     bool found;
@@ -80,17 +80,32 @@ ArrayList<TableItem<K, T>*> DuplicitySortedSequenceTable<T, K>::findTableItems(c
         foundItem = this->list_->at(indexOfPossibleKeys);
         while (foundItem->getKey() == key)
         {
-           results->add(found);
+           results->add(foundItem);
            ++indexOfPossibleKeys;
-           foundItem = this->list_->at(indexOfPossibleKeys);
+            if (this->list_->size() > indexOfPossibleKeys)
+            {
+                foundItem = this->list_->at(indexOfPossibleKeys);
+            } else
+            {
+                break;
+            }
         }
-
-        foundItem = this->list_->at(indexOfFirstFoundKey);
-        while (foundItem->getKey() == key)
+        indexOfPossibleKeys = --indexOfFirstFoundKey;
+        if (this->list_->size() > indexOfPossibleKeys)
         {
-            results->add(found);
-            --indexOfPossibleKeys;
             foundItem = this->list_->at(indexOfPossibleKeys);
+            while (foundItem->getKey() == key)
+            {
+                results->add(foundItem);
+                --indexOfPossibleKeys;
+                if (this->list_->size() > indexOfPossibleKeys)
+                {
+                    foundItem = this->list_->at(indexOfPossibleKeys);
+                } else
+                {
+                    break;
+                }
+            }
         }
         return results;
     }
