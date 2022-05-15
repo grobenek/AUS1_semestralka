@@ -7,8 +7,8 @@ add_executable(
         Szathmary_semestralna_praca
         main.cpp
         criteriums/Criterium.h
-        criteriums/CriteriumName.cpp
-        criteriums/CriteriumName.h
+        criteriums/CriteriumNazov.cpp
+        criteriums/CriteriumNazov.h
         UzemnaJednotka.cpp UzemnaJednotka.h
         structures/_logger/file_log_consumer.cpp
         structures/_logger/file_log_consumer.h
@@ -68,4 +68,4 @@ add_executable(
         structures/utils.cpp
         structures/utils.h
 
-        enums/UzemnaJednotkaTyp.h structures/table/DuplicitySortedSequenceTable.h)
+        enums/UzemnaJednotkaTyp.h structures/table/DuplicitySortedSequenceTable.h criteriums/CriteriumVzdelaniePocet.cpp criteriums/CriteriumVzdelaniePocet.h enums/VzdelanieTyp.h enums/VekTyp.h)
