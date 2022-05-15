@@ -3,6 +3,7 @@
 //
 
 #include "UzemnaJednotka.h"
+#include "enums/VzdelanieTyp.h"
 
 #include <utility>
 
@@ -13,6 +14,8 @@ UzemnaJednotka::UzemnaJednotka(structures::ArrayList<int>* vek, structures::Arra
     this->vzdelanie = vzdelanie;
     this->nazov = std::move(nazov);
     this->typ = typ;
+    this->vzdelanieUtriedene = new structures::Array<int>(8);
+    this->vekUtriedene = new structures::Array<int>(202);
 }
 
 void UzemnaJednotka::setVyssiUzemnyCelok(UzemnaJednotka* pVyssiUzemnyCelok)
@@ -43,4 +46,19 @@ UzemnaJednotka* UzemnaJednotka::getVyssiUzemnyCelok() const
 const std::string& UzemnaJednotka::getNazov() const
 {
     return nazov;
+}
+
+structures::Array<int>* UzemnaJednotka::getVzdelanieUtriedene() const
+{
+    return vzdelanieUtriedene;
+}
+
+structures::Array<int>* UzemnaJednotka::getVekUtriedene() const
+{
+    return vekUtriedene;
+}
+
+int UzemnaJednotka::getPocetObyvatelov() const
+{
+    return pocetObyvatelov;
 }

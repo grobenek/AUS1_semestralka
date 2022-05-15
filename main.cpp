@@ -1,6 +1,6 @@
 #include <iostream>
 #include "structures/table/DuplicitySortedSequenceTable.h"
-#include "criteriums/CriteriumName.h"
+#include "criteriums/CriteriumNazov.h"
 
 int main()
 {
@@ -49,7 +49,7 @@ int main()
 
 
     std::string nameToEvaluate = "1";
-    auto* criteriumName = new CriteriumName(nameToEvaluate);
+    auto* criteriumName = new CriteriumNazov(nameToEvaluate);
 
     auto* resultsOfCriterium = criteriumName->evaluate(duplicityTable);
 
@@ -60,6 +60,7 @@ int main()
         std::cout << resultsOfCriterium->at(i)->getNazov() << std::endl;
     }
 
+    delete resultsOfCriterium;
     delete criteriumName;
 
     system("leaks Szathmary_semestralna_praca");

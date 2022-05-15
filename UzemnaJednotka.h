@@ -13,23 +13,33 @@ class UzemnaJednotka
 {
 protected:
     structures::ArrayList<int>* vzdelanie;
+    structures::Array<int>* vzdelanieUtriedene;
     structures::ArrayList<int>* vek;
+    structures::Array<int>* vekUtriedene;
+    int pocetObyvatelov;
     UzemnaJednotkaTyp typ;
     UzemnaJednotka* vyssiUzemnyCelok;
     std::string nazov;
 public:
     UzemnaJednotka(structures::ArrayList<int>* vek, structures::ArrayList<int>* vzdelanie, std::string nazov, UzemnaJednotkaTyp typ);
+    //TODO uzemna jednotka si sama prepocita vsetky vzdelanie aj veky a ostatne veci si z nej budu tahat len vysledky
     void setVyssiUzemnyCelok(UzemnaJednotka* pVyssiUzemnyCelok);
 
     structures::ArrayList<int>* getVzdelanie() const;
 
     structures::ArrayList<int>* getVek() const;
 
+    int getPocetObyvatelov() const;
+
     UzemnaJednotkaTyp getTyp() const;
 
     UzemnaJednotka* getVyssiUzemnyCelok() const;
 
     const std::string& getNazov() const;
+
+    structures::Array<int>* getVzdelanieUtriedene() const;
+
+    structures::Array<int>* getVekUtriedene() const;
 };
 
 
