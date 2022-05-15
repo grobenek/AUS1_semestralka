@@ -20,6 +20,16 @@ protected:
 public:
     UzemnaJednotka(structures::ArrayList<int>* vek, structures::ArrayList<int>* vzdelanie, std::string nazov, UzemnaJednotkaTyp typ);
     void setVyssiUzemnyCelok(UzemnaJednotka* pVyssiUzemnyCelok);
+
+    structures::ArrayList<int>* getVzdelanie() const;
+
+    structures::ArrayList<int>* getVek() const;
+
+    UzemnaJednotkaTyp getTyp() const;
+
+    UzemnaJednotka* getVyssiUzemnyCelok() const;
+
+    const std::string& getNazov() const;
 };
 
 

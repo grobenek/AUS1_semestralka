@@ -91,7 +91,7 @@ namespace structures
 
         if (found)
         {
-            throw std::logic_error("Key already exists in SortedSequenceTable! Key: " + std::to_string(key));
+            throw std::logic_error("Key already exists in SortedSequenceTable!");
         } else
         {
             try

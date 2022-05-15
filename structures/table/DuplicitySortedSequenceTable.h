@@ -7,25 +7,22 @@
 #ifndef SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H
 #define SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H
 
-#endif //SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H
 using namespace structures;
 
-template<typename T, typename K>
-class DuplicitySortedSequenceTable : public structures::SortedSequenceTable<T, K>
+template<typename K, typename T>
+class DuplicitySortedSequenceTable : public structures::SortedSequenceTable<K, T>
 {
 public:
     DuplicitySortedSequenceTable();
 
-    void insert(const K& key, const T& data) override;
+    void insert(const K& key, const T& data);
 
-    void tryFind(K& key, T& data);
-
-public:
     ArrayList<TableItem<K, T>*>* findTableItems(const K& key);
+
 };
 
-template<typename T, typename K>
-void DuplicitySortedSequenceTable<T, K>::insert(const K& key, const T& data)
+template<typename K, typename T>
+inline void DuplicitySortedSequenceTable<K, T>::insert(const K& key, const T& data)
 {
     if (this->size() == 0)
     {
@@ -51,19 +48,13 @@ void DuplicitySortedSequenceTable<T, K>::insert(const K& key, const T& data)
     }
 }
 
-template<typename T, typename K>
-void DuplicitySortedSequenceTable<T, K>::tryFind(K& key, T& data)
-{
-
-}
-
-template<typename T, typename K>
-DuplicitySortedSequenceTable<T, K>::DuplicitySortedSequenceTable() : structures::SortedSequenceTable<K, T>()
+template<typename K, typename T>
+inline DuplicitySortedSequenceTable<K, T>::DuplicitySortedSequenceTable() : structures::SortedSequenceTable<K, T>()
 {
 }
 
-template<typename T, typename K>
-ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<T, K>::findTableItems(const K& key)
+template<typename K, typename T>
+inline ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findTableItems(const K& key)
 {
     auto results = new ArrayList<TableItem<K, T>*>();
     bool found;
@@ -80,8 +71,8 @@ ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<T, K>::findTableItems(
         foundItem = this->list_->at(indexOfPossibleKeys);
         while (foundItem->getKey() == key)
         {
-           results->add(foundItem);
-           ++indexOfPossibleKeys;
+            results->add(foundItem);
+            ++indexOfPossibleKeys;
             if (this->list_->size() > indexOfPossibleKeys)
             {
                 foundItem = this->list_->at(indexOfPossibleKeys);
@@ -114,3 +105,6 @@ ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<T, K>::findTableItems(
     return nullptr;
 }
 
+
+
+#endif //SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H

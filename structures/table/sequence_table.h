@@ -113,7 +113,7 @@ namespace structures
 		}
 		else
 		{
-			throw std::out_of_range("Key not found in SequenceTable! Key:" + std::to_string(key));
+			throw std::out_of_range("Key not found in SequenceTable! Key:");
 		}
 	}
 
@@ -122,7 +122,7 @@ namespace structures
 	{
 		if (this->containsKey(key))
 		{
-            throw std::logic_error("Duplicate key in SequenceTable! Key: " + std::to_string(key));
+            throw std::logic_error("Duplicate key in SequenceTable!");
 		}
 		else
 		{
@@ -144,7 +144,7 @@ namespace structures
 		}
 		else
 		{
-			throw std::logic_error("Key not found in Sequence table! Key:" + std::to_string(key));
+			throw std::logic_error("Key not found in Sequence table!");
 		}
 	}
 

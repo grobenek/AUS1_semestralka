@@ -7,8 +7,8 @@ add_executable(
         Szathmary_semestralna_praca
         main.cpp
         criteriums/Criterium.h
-        criteriums/CriteriumNazov.cpp
-        criteriums/CriteriumNazov.h
+        criteriums/CriteriumName.cpp
+        criteriums/CriteriumName.h
         UzemnaJednotka.cpp UzemnaJednotka.h
         structures/_logger/file_log_consumer.cpp
         structures/_logger/file_log_consumer.h
