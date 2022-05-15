@@ -68,4 +68,4 @@ add_executable(
         structures/utils.cpp
         structures/utils.h
 
-        enums/UzemnaJednotkaTyp.h)
+        enums/UzemnaJednotkaTyp.h structures/table/DuplicitySortedSequenceTable.h)
