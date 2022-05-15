@@ -42,7 +42,7 @@ namespace structures
         /// <returns> Prvok tabulky s danym klucom, ak neexistuje, vrati nullptr. </returns>
         TableItem<K, T>* findTableItem(const K& key) override;
 
-    private:
+    protected:
         /// <summary> Najde index prvku s danym klucom. Kontroluje rozsah [indexStart, indexEnd). Pracuje na principe bisekcie. </summary>
         /// <param name = "key"> Hladany kluc. </param>
         /// <param name = "indexStart"> Pociatocny index prehladavanej sekvencie. </param>
