@@ -2,12 +2,12 @@
 // Created by Peter Szathmáry on 11/05/2022.
 //
 
-#include "CriteriumName.h"
+#include "CriteriumNazov.h"
 
 #include <utility>
 
 
-ArrayList<UzemnaJednotka*>* CriteriumName::evaluate(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*& object)
+ArrayList<UzemnaJednotka*>* CriteriumNazov::evaluate(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*& object)
 {
     auto* result = new ArrayList<UzemnaJednotka*>;
 
@@ -28,6 +28,6 @@ ArrayList<UzemnaJednotka*>* CriteriumName::evaluate(DuplicitySortedSequenceTable
     return result;
 }
 
-CriteriumName::CriteriumName(std::string  nameToEvaluate) : nameToEvaluate(std::move(nameToEvaluate)),
-                                                            Criterium<DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*, ArrayList<UzemnaJednotka*>*>()
+CriteriumNazov::CriteriumNazov(std::string  nameToEvaluate) : nameToEvaluate(std::move(nameToEvaluate)),
+                                                              Criterium<DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*, ArrayList<UzemnaJednotka*>*>()
 {}
