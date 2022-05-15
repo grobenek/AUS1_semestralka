@@ -9,13 +9,14 @@
 /// na kazdom jednom indexe bude pocet ludi s danym vzdelanim
 enum VzdelanieTyp
 {
-    BEZ_UKONCENEHO = 0,
+    BEZ_UKONCENEHO_DO_14 = 0,
     ZAKLADNE = 1,
     UCNOVSKE = 2,
     STREDNE = 3,
     VYSSIE = 4,
     VYSOKOSKOLSKE = 5,
-    NEZISTENE = 6
+    BEZ_VZDELANIE_OD_15 = 6,
+    NEZISTENE = 7
 };
 
 
