@@ -7,7 +7,7 @@
 
 
 #include "Criterium.h"
-#include "../UzemnaJednotka.h"
+#include "../UzemnaJednotka/UzemnaJednotka.h"
 #include "../structures/table/DuplicitySortedSequenceTable.h"
 
 

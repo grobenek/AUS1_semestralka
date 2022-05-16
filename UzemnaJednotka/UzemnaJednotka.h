@@ -5,8 +5,8 @@
 #ifndef SZATHMARY_SEMESTRALNA_PRACA_UZEMNAJEDNOTKA_H
 #define SZATHMARY_SEMESTRALNA_PRACA_UZEMNAJEDNOTKA_H
 
-#include "structures/list/array_list.h"
-#include "enums/UzemnaJednotkaTyp.h"
+#include "../structures/list/array_list.h"
+#include "../enums/UzemnaJednotkaTyp.h"
 
 
 class UzemnaJednotka
@@ -25,9 +25,13 @@ public:
     //TODO uzemna jednotka si sama prepocita vsetky vzdelanie aj veky a ostatne veci si z nej budu tahat len vysledky
     void setVyssiUzemnyCelok(UzemnaJednotka* pVyssiUzemnyCelok);
 
+    ~UzemnaJednotka();
+
     structures::ArrayList<int>* getVzdelanie() const;
 
     structures::ArrayList<int>* getVek() const;
+
+    void setVzdelanieUtriedene(structures::Array<int>* pVzdelanieUtriedene);
 
     int getPocetObyvatelov() const;
 

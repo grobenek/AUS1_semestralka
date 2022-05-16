@@ -17,13 +17,16 @@ public:
 
     void insert(const K& key, const T& data);
 
-    ArrayList<TableItem<K, T>*>* findTableItems(const K& key);
+    ArrayList<TableItem<K, T>*>* findAll(const K& key);
+
+    ~DuplicitySortedSequenceTable();
 
 };
 
 template<typename K, typename T>
 inline void DuplicitySortedSequenceTable<K, T>::insert(const K& key, const T& data)
 {
+
     if (this->size() == 0)
     {
         this->list_->add(new structures::TableItem<K, T>(key, data));
@@ -54,7 +57,7 @@ inline DuplicitySortedSequenceTable<K, T>::DuplicitySortedSequenceTable() : stru
 }
 
 template<typename K, typename T>
-inline ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findTableItems(const K& key)
+inline ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findAll(const K& key)
 {
     auto results = new ArrayList<TableItem<K, T>*>();
     bool found;
@@ -105,6 +108,14 @@ inline ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findTabl
     return nullptr;
 }
 
+template<typename K, typename T>
+DuplicitySortedSequenceTable<K, T>::~DuplicitySortedSequenceTable()
+{
+    for (int i = 0; i < this->list_->size(); ++i)
+    {
+        delete this->list_->at(i)->accessData();
+    }
+}
 
 
 #endif //SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H

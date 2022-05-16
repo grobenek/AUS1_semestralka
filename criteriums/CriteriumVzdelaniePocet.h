@@ -6,7 +6,7 @@
 #define SZATHMARY_SEMESTRALNA_PRACA_CRITERIUMVZDELANIEPOCET_H
 
 
-#include "../UzemnaJednotka.h"
+#include "../UzemnaJednotka/UzemnaJednotka.h"
 #include "../structures/table/DuplicitySortedSequenceTable.h"
 #include "Criterium.h"
 #include "../enums/VzdelanieTyp.h"

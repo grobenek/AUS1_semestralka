@@ -1,13 +1,29 @@
 #include <iostream>
 #include "structures/table/DuplicitySortedSequenceTable.h"
 #include "criteriums/CriteriumNazov.h"
+#include "criteriums/CriteriumVzdelaniePocet.h"
+
+void spustiSa();
 
 int main()
+{
+    spustiSa();
+    system("leaks Szathmary_semestralna_praca");
+    return 0;
+}
+
+void spustiSa()
 {
     auto* duplicityTable = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
 
     auto* prva = new UzemnaJednotka(nullptr, nullptr, "1", OBEC);
     auto* druha = new UzemnaJednotka(nullptr, nullptr, "2", OBEC);
+    auto* array = new structures::Array<int>(8);
+    for (int i = 0; i < 8; ++i)
+    {
+        array->at(i) = 10;
+    }
+    druha->setVzdelanieUtriedene(array);
     auto* tretia = new UzemnaJednotka(nullptr, nullptr, "1", OBEC);
     auto* stvrta = new UzemnaJednotka(nullptr, nullptr, "3", OBEC);
     auto* piata = new UzemnaJednotka(nullptr, nullptr, "0", OBEC);
@@ -18,6 +34,7 @@ int main()
     duplicityTable->insert("1", tretia);
     duplicityTable->insert("3", stvrta);
     duplicityTable->insert("0", piata);
+
 
     std::cout << "Size: " << duplicityTable->size() << std::endl;
 
@@ -31,7 +48,7 @@ int main()
 
     std::string keyToFind = "1";
     std::cout << "Trying to find item with key " << keyToFind << std::endl;
-    auto* results = duplicityTable->findTableItems(keyToFind);
+    auto* results = duplicityTable->findAll(keyToFind);
 
     if (results != nullptr)
     {
@@ -60,9 +77,21 @@ int main()
         std::cout << resultsOfCriterium->at(i)->getNazov() << std::endl;
     }
 
-    delete resultsOfCriterium;
-    delete criteriumName;
+    auto* criteriumVzdelanie = new CriteriumVzdelaniePocet(10, VYSOKOSKOLSKE);
 
-    system("leaks Szathmary_semestralna_praca");
-    return 0;
+    auto* result = criteriumVzdelanie->evaluate(duplicityTable);
+
+
+    for (int i = 0; i < result->size(); ++i)
+    {
+        std::cout << result->at(i)->getNazov() << std::endl;
+    }
+
+
+    delete criteriumName;
+    delete criteriumVzdelanie;
+    delete result;
+    delete results;
+    delete resultsOfCriterium;
+    delete duplicityTable;
 }

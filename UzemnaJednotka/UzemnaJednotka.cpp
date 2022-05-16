@@ -3,7 +3,7 @@
 //
 
 #include "UzemnaJednotka.h"
-#include "enums/VzdelanieTyp.h"
+#include "../enums/VzdelanieTyp.h"
 
 #include <utility>
 
@@ -61,4 +61,18 @@ structures::Array<int>* UzemnaJednotka::getVekUtriedene() const
 int UzemnaJednotka::getPocetObyvatelov() const
 {
     return pocetObyvatelov;
+}
+
+void UzemnaJednotka::setVzdelanieUtriedene(structures::Array<int>* pVzdelanieUtriedene)
+{
+    delete vzdelanieUtriedene;
+    UzemnaJednotka::vzdelanieUtriedene = pVzdelanieUtriedene;
+}
+
+UzemnaJednotka::~UzemnaJednotka()
+{
+    delete this->vzdelanieUtriedene;
+    delete this->vek;
+    delete this->vzdelanie;
+    delete this->vekUtriedene;
 }

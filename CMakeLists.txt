@@ -9,7 +9,7 @@ add_executable(
         criteriums/Criterium.h
         criteriums/CriteriumNazov.cpp
         criteriums/CriteriumNazov.h
-        UzemnaJednotka.cpp UzemnaJednotka.h
+        UzemnaJednotka/UzemnaJednotka.cpp UzemnaJednotka/UzemnaJednotka.h
         structures/_logger/file_log_consumer.cpp
         structures/_logger/file_log_consumer.h
         structures/_logger/logger.cpp
