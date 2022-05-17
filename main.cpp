@@ -82,6 +82,7 @@ void spustiSa()
     auto* result = criteriumVzdelanie->evaluate(duplicityTable);
 
 
+    std::cout << "Vysledok vzdelaniePocet:" << std::endl;
     for (int i = 0; i < result->size(); ++i)
     {
         std::cout << result->at(i)->getNazov() << std::endl;

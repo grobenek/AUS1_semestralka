@@ -17,7 +17,7 @@ public:
 
     void insert(const K& key, const T& data);
 
-    ArrayList<TableItem<K, T>*>* findAll(const K& key);
+    List<TableItem<K, T>*>* findAll(const K& key);
 
     ~DuplicitySortedSequenceTable();
 
@@ -57,7 +57,7 @@ inline DuplicitySortedSequenceTable<K, T>::DuplicitySortedSequenceTable() : stru
 }
 
 template<typename K, typename T>
-inline ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findAll(const K& key)
+inline List<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findAll(const K& key)
 {
     auto results = new ArrayList<TableItem<K, T>*>();
     bool found;

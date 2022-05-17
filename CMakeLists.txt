@@ -9,7 +9,7 @@ add_executable(
         criteriums/Criterium.h
         criteriums/CriteriumNazov.cpp
         criteriums/CriteriumNazov.h
-        UzemnaJednotka/UzemnaJednotka.cpp UzemnaJednotka/UzemnaJednotka.h
+        uzemna_jednotka/UzemnaJednotka.cpp uzemna_jednotka/UzemnaJednotka.h
         structures/_logger/file_log_consumer.cpp
         structures/_logger/file_log_consumer.h
         structures/_logger/logger.cpp
@@ -68,4 +68,4 @@ add_executable(
         structures/utils.cpp
         structures/utils.h
 
-        enums/UzemnaJednotkaTyp.h structures/table/DuplicitySortedSequenceTable.h criteriums/CriteriumVzdelaniePocet.cpp criteriums/CriteriumVzdelaniePocet.h enums/VzdelanieTyp.h enums/VekTyp.h criteriums/CriteriumVzdelaniePodiel.cpp criteriums/CriteriumVzdelaniePodiel.h)
+        enums/UzemnaJednotkaTyp.h structures/table/DuplicitySortedSequenceTable.h criteriums/CriteriumVzdelaniePocet.cpp criteriums/CriteriumVzdelaniePocet.h enums/VzdelanieTyp.h enums/VekTyp.h criteriums/CriteriumVzdelaniePodiel.cpp criteriums/CriteriumVzdelaniePodiel.h filters/Filter.h filters/FilterWithCriterium.h filters/FilterBetween.cpp filters/FilterBetween.h)

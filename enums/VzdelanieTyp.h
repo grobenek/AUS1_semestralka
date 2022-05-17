@@ -5,7 +5,7 @@
 #ifndef SZATHMARY_SEMESTRALNA_PRACA_VZDELANIETYP_H
 #define SZATHMARY_SEMESTRALNA_PRACA_VZDELANIETYP_H
 
-/// sluzi na indexovanie pola vzdelanieUtriedene v UzemnaJednotka
+/// sluzi na indexovanie pola vzdelanieUtriedene v uzemna_jednotka
 /// na kazdom jednom indexe bude pocet ludi s danym vzdelanim
 enum VzdelanieTyp
 {
