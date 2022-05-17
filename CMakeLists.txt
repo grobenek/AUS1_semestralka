@@ -68,4 +68,4 @@ add_executable(
         structures/utils.cpp
         structures/utils.h
 
-        enums/UzemnaJednotkaTyp.h structures/table/DuplicitySortedSequenceTable.h criteriums/CriteriumVzdelaniePocet.cpp criteriums/CriteriumVzdelaniePocet.h enums/VzdelanieTyp.h enums/VekTyp.h criteriums/CriteriumVzdelaniePodiel.cpp criteriums/CriteriumVzdelaniePodiel.h filters/Filter.h filters/FilterWithCriterium.h filters/FilterBetween.cpp filters/FilterBetween.h)
+        enums/UzemnaJednotkaTyp.h structures/table/DuplicitySortedSequenceTable.h criteriums/CriteriumVzdelaniePocet.cpp criteriums/CriteriumVzdelaniePocet.h enums/VzdelanieTyp.h enums/VekTyp.h criteriums/CriteriumVzdelaniePodiel.cpp criteriums/CriteriumVzdelaniePodiel.h filters/Filter.h filters/FilterWithCriterium.h filters/FilterBetween.h filters/FilterEquals.h)

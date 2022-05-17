@@ -22,7 +22,7 @@ public:
     bool pass(ObjetType& object);
 
 protected:
-    bool passFilter(ValueType value) = 0;
+    virtual bool passFilter(ValueType value) = 0;
 };
 
 template<typename ObjetType, typename ValueType>
