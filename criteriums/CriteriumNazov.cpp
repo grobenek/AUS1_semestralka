@@ -9,12 +9,9 @@
 
 std::string CriteriumNazov::evaluate(UzemnaJednotka*& object)
 {
-    if (object->getNazov() == this->nameToEvaluate)
-    {
-        return object->getNazov();
-    }
+    return object->getNazov();
 }
 
-CriteriumNazov::CriteriumNazov(std::string  nameToEvaluate) : nameToEvaluate(std::move(nameToEvaluate)),
-                                                              Criterium<UzemnaJednotka*, std::string>()
-{}
+CriteriumNazov::CriteriumNazov()
+{
+}

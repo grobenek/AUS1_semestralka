@@ -16,7 +16,7 @@ class CriteriumNazov : public Criterium<UzemnaJednotka*, std::string>
 private:
     std::string nameToEvaluate;
 public:
-    explicit CriteriumNazov(std::string  nameToEvaluate);
+    explicit CriteriumNazov();
 
     std::string evaluate(UzemnaJednotka*& object) override;
 };
