@@ -7,27 +7,14 @@
 #include <utility>
 
 
-ArrayList<UzemnaJednotka*>* CriteriumNazov::evaluate(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*& object)
+std::string CriteriumNazov::evaluate(UzemnaJednotka& object)
 {
-    auto* result = new ArrayList<UzemnaJednotka*>;
-
-    for (auto item : *object)
+    if (object.getNazov() == this->nameToEvaluate)
     {
-        if (item->accessData()->getNazov() == this->nameToEvaluate)
-        {
-            result->add(item->accessData());
-        }
+        return object.getNazov();
     }
-
-    if (result->size() == 0)
-    {
-        delete result;
-        return nullptr;
-    }
-
-    return result;
 }
 
 CriteriumNazov::CriteriumNazov(std::string  nameToEvaluate) : nameToEvaluate(std::move(nameToEvaluate)),
-                                                              Criterium<DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*, ArrayList<UzemnaJednotka*>*>()
+                                                              Criterium<UzemnaJednotka*, std::string>()
 {}

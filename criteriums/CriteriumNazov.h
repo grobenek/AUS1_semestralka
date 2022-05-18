@@ -11,14 +11,14 @@
 #include "../structures/table/DuplicitySortedSequenceTable.h"
 
 
-class CriteriumNazov : public Criterium<DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*, ArrayList<UzemnaJednotka*>*>
+class CriteriumNazov : public Criterium<UzemnaJednotka*, std::string>
 {
 private:
     std::string nameToEvaluate;
 public:
     explicit CriteriumNazov(std::string  nameToEvaluate);
 
-    ArrayList<UzemnaJednotka*>* evaluate(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*& object) override;
+    std::string evaluate(UzemnaJednotka& object);
 };
 
 

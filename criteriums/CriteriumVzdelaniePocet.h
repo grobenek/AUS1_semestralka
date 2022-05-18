@@ -11,16 +11,15 @@
 #include "Criterium.h"
 #include "../enums/VzdelanieTyp.h"
 
-class CriteriumVzdelaniePocet : public Criterium<DuplicitySortedSequenceTable < std::string, UzemnaJednotka*>*, ArrayList<UzemnaJednotka*>*>
+class CriteriumVzdelaniePocet : public Criterium<UzemnaJednotka*, int>
 {
 private:
- int vzdelaniePocet;
  VzdelanieTyp vzdelanieTyp;
 
 public:
-    CriteriumVzdelaniePocet(int vzdelaniePocet, VzdelanieTyp vzdelanieTyp);
+    explicit CriteriumVzdelaniePocet(VzdelanieTyp vzdelanieTyp);
 
-    ArrayList<UzemnaJednotka*>* evaluate(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*& object) override;
+    int evaluate(UzemnaJednotka& object);
 };
 
 

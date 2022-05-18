@@ -4,28 +4,13 @@
 
 #include "CriteriumVzdelaniePocet.h"
 
-CriteriumVzdelaniePocet::CriteriumVzdelaniePocet(int vzdelaniePocet, VzdelanieTyp vzdelanieTyp) : vzdelaniePocet(
-        vzdelaniePocet), vzdelanieTyp(vzdelanieTyp)
+CriteriumVzdelaniePocet::CriteriumVzdelaniePocet(VzdelanieTyp vzdelanieTyp) : vzdelanieTyp(vzdelanieTyp)
 {}
 
-ArrayList<UzemnaJednotka*>*
-CriteriumVzdelaniePocet::evaluate(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*& object)
+int
+CriteriumVzdelaniePocet::evaluate(UzemnaJednotka& object)
 {
-    auto* result = new ArrayList<UzemnaJednotka*>;
-
-    for (auto item : *object)
-    {
-        if (item->accessData()->getVzdelanieUtriedene()->at(vzdelanieTyp) == vzdelaniePocet)
-        {
-            result->add(item->accessData());
-        }
-    }
-
-    if (result->size() == 0)
-    {
-        delete result;
-        return nullptr;
-    }
+    int result = object.getVzdelanieUtriedene()->at(vzdelanieTyp);
 
     return result;
 }

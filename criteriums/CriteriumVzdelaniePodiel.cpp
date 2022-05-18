@@ -4,29 +4,13 @@
 
 #include "CriteriumVzdelaniePodiel.h"
 
-CriteriumVzdelaniePodiel::CriteriumVzdelaniePodiel(int vzdelaniePocet, VzdelanieTyp vzdelanieTyp) : vzdelaniePocet(
-        vzdelaniePocet), vzdelanieTyp(vzdelanieTyp)
+CriteriumVzdelaniePodiel::CriteriumVzdelaniePodiel(VzdelanieTyp vzdelanieTyp) : vzdelanieTyp(vzdelanieTyp)
 {}
 
-ArrayList<UzemnaJednotka*>*
-CriteriumVzdelaniePodiel::evaluate(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*& object)
+double
+CriteriumVzdelaniePodiel::evaluate(UzemnaJednotka& object)
 {
-    auto* result = new ArrayList<UzemnaJednotka*>;
-
-    for (auto item: *object)
-    {
-        if ((item->accessData()->getVzdelanieUtriedene()->at(vzdelanieTyp) / item->accessData()->getPocetObyvatelov()) *
-            100 == vzdelaniePocet)
-        {
-            result->add(item->accessData());
-        }
-    }
-
-    if (result->size() == 0)
-    {
-        delete result;
-        return nullptr;
-    }
-
+    int result = (object.getVzdelanieUtriedene()->at(vzdelanieTyp) / object.getPocetObyvatelov()) *
+                 100;
     return result;
 }
