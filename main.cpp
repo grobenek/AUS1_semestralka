@@ -65,34 +65,7 @@ void spustiSa()
     std::cout << duplicityTable->containsKey("1") << std::endl;
 
 
-    std::string nameToEvaluate = "1";
-    auto* criteriumName = new CriteriumNazov(nameToEvaluate);
 
-    auto* resultsOfCriterium = criteriumName->evaluate(duplicityTable);
-
-    std::cout << "Results of criteriumName with name: " << nameToEvaluate << std::endl;
-
-    for (int i = 0; i < resultsOfCriterium->size(); ++i)
-    {
-        std::cout << resultsOfCriterium->at(i)->getNazov() << std::endl;
-    }
-
-    auto* criteriumVzdelanie = new CriteriumVzdelaniePocet(10, VYSOKOSKOLSKE);
-
-    auto* result = criteriumVzdelanie->evaluate(duplicityTable);
-
-
-    std::cout << "Vysledok vzdelaniePocet:" << std::endl;
-    for (int i = 0; i < result->size(); ++i)
-    {
-        std::cout << result->at(i)->getNazov() << std::endl;
-    }
-
-
-    delete criteriumName;
-    delete criteriumVzdelanie;
-    delete result;
     delete results;
-    delete resultsOfCriterium;
     delete duplicityTable;
 }

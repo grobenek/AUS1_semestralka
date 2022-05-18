@@ -19,7 +19,7 @@ private:
 public:
     explicit CriteriumVzdelaniePocet(VzdelanieTyp vzdelanieTyp);
 
-    int evaluate(UzemnaJednotka& object);
+    int evaluate(UzemnaJednotka*& object) override;
 };
 
 

@@ -8,9 +8,9 @@ CriteriumVzdelaniePocet::CriteriumVzdelaniePocet(VzdelanieTyp vzdelanieTyp) : vz
 {}
 
 int
-CriteriumVzdelaniePocet::evaluate(UzemnaJednotka& object)
+CriteriumVzdelaniePocet::evaluate(UzemnaJednotka*& object)
 {
-    int result = object.getVzdelanieUtriedene()->at(vzdelanieTyp);
+    int result = object->getVzdelanieUtriedene()->at(vzdelanieTyp);
 
     return result;
 }

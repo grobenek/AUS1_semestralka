@@ -8,9 +8,9 @@ CriteriumVzdelaniePodiel::CriteriumVzdelaniePodiel(VzdelanieTyp vzdelanieTyp) : 
 {}
 
 double
-CriteriumVzdelaniePodiel::evaluate(UzemnaJednotka& object)
+CriteriumVzdelaniePodiel::evaluate(UzemnaJednotka*& object)
 {
-    int result = (object.getVzdelanieUtriedene()->at(vzdelanieTyp) / object.getPocetObyvatelov()) *
+    int result = (object->getVzdelanieUtriedene()->at(vzdelanieTyp) / object->getPocetObyvatelov()) *
                  100;
     return result;
 }

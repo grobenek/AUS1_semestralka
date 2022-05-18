@@ -19,7 +19,7 @@ private:
 public:
     explicit CriteriumVzdelaniePodiel(VzdelanieTyp vzdelanieTyp);
 
-    double evaluate(UzemnaJednotka& object);
+    double evaluate(UzemnaJednotka*& object) override;
 
 };
 

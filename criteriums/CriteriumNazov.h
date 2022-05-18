@@ -18,7 +18,7 @@ private:
 public:
     explicit CriteriumNazov(std::string  nameToEvaluate);
 
-    std::string evaluate(UzemnaJednotka& object);
+    std::string evaluate(UzemnaJednotka*& object) override;
 };
 
 

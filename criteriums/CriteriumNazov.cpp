@@ -7,11 +7,11 @@
 #include <utility>
 
 
-std::string CriteriumNazov::evaluate(UzemnaJednotka& object)
+std::string CriteriumNazov::evaluate(UzemnaJednotka*& object)
 {
-    if (object.getNazov() == this->nameToEvaluate)
+    if (object->getNazov() == this->nameToEvaluate)
     {
-        return object.getNazov();
+        return object->getNazov();
     }
 }
 
