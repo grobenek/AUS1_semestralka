@@ -12,9 +12,11 @@
 template<typename ObjectType, typename StructureType>
 class Filter
 {
-    virtual bool passItem(ObjectType& object) = 0;
 
     virtual structures::List<ObjectType>* passStructure(StructureType& structure) = 0;
+
+protected:
+    virtual bool passItem(ObjectType& object) = 0;
 };
 
 

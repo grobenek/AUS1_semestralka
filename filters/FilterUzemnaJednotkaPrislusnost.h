@@ -33,22 +33,6 @@ protected:
     List<UzemnaJednotka*>*
     passFilterStructure(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& structure) override
     {
-        auto* result = new ArrayListWithObject<UzemnaJednotka*>();
-
-        for (auto* item: structure)
-        {
-            if (this->passItem(item->accessData()))
-            {
-                auto* newItem = item->accessData()->clone();
-                result->add(newItem);
-            }
-        }
-        if (result->isEmpty())
-        {
-            delete result;
-            result = nullptr;
-        }
-        return result;
     }
 };
 

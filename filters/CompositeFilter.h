@@ -8,15 +8,16 @@
 
 #include "Filter.h"
 #include "../structures/list/array_list.h"
+#include "../structures/list/ArrayListWithObject.h"
 
-template<typename ObjectType>
-class CompositeFilter : public Filter<ObjectType>
+template<typename ObjectType, typename StructureType>
+class CompositeFilter : public Filter<ObjectType, StructureType>
 {
 protected:
-    structures::ArrayList<Filter<ObjectType>*> filters;
+    ArrayListWithObject<Filter<ObjectType, StructureType>*> filters;
 
 public:
-    void registerFilter(Filter<ObjectType>* filter)
+    void registerFilter(Filter<ObjectType, StructureType>* filter)
     {
         if (filter != nullptr)
         {
@@ -27,7 +28,31 @@ public:
         }
     }
 
+private:
+    structures::List<ObjectType>* passStructure(StructureType& structure) override
+    {
+        auto* result = new ArrayListWithObject<ObjectType>();
 
+        for (auto item: structure)
+        {
+            bool passed = true;
+            for (int i = 0; i < this->filters.size(); ++i)
+            {
+                passed = this->filters.at(i)->passItem(item);
+                if (!passed)
+                {
+                    break;
+                }
+            }
+            result->add(item);
+        }
+        if (result->size() == 0)
+        {
+            delete result;
+            result = nullptr;
+        }
+        return result;
+    }
 };
 
 
