@@ -7,40 +7,56 @@
 
 #include "Filter.h"
 #include "../criteriums/Criterium.h"
+#include "../structures/list/linked_list.h"
 
-template<typename ObjetType, typename ValueType>
-class FilterWithCriterium : public Filter<ObjetType>
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+template<typename ObjectType, typename ValueType, typename StructureType>
+class FilterWithCriterium : public Filter<ObjectType, StructureType>
 {
 private:
-    Criterium<ObjetType, ValueType>* criterium;
+    Criterium<ObjectType, ValueType>* criterium;
 
 public:
-    explicit FilterWithCriterium(Criterium<ObjetType, ValueType>* criteriumToEvaluate);
+    explicit FilterWithCriterium(Criterium<ObjectType, ValueType>* criteriumToEvaluate);
 
     ~FilterWithCriterium();
 
-    bool pass(ObjetType& object);
+    structures::List<ObjectType>* passStructure(StructureType& structure);
 
 protected:
     virtual bool passFilter(ValueType value) = 0;
+
+    virtual structures::List<ObjectType>* passFilterStructure(StructureType& structure) = 0;
+
+    bool passItem(ObjectType& object) override;
 };
 
-template<typename ObjetType, typename ValueType>
-FilterWithCriterium<ObjetType, ValueType>::FilterWithCriterium(Criterium<ObjetType, ValueType>* criteriumToEvaluate)
+template<typename ObjectType, typename ValueType, typename StructureType>
+FilterWithCriterium<ObjectType, ValueType, StructureType>::FilterWithCriterium(Criterium<ObjectType, ValueType>* criteriumToEvaluate)
 {
     this->criterium = criteriumToEvaluate;
 }
 
-template<typename ObjetType, typename ValueType>
-FilterWithCriterium<ObjetType, ValueType>::~FilterWithCriterium()
+template<typename ObjectType, typename ValueType, typename StructureType>
+FilterWithCriterium<ObjectType, ValueType, StructureType>::~FilterWithCriterium()
 {
     delete this->criterium;
 }
 
-template<typename ObjetType, typename ValueType>
-bool FilterWithCriterium<ObjetType, ValueType>::pass(ObjetType& object)
+template<typename ObjectType, typename ValueType, typename StructureType>
+bool FilterWithCriterium<ObjectType, ValueType, StructureType>::passItem(ObjectType& object)
 {
-    return this->passFilter(criterium->evaluate(object));
+     return this->passFilter(criterium->evaluate(object));
+}
+
+template<typename ObjectType, typename ValueType, typename StructureType>
+structures::List<ObjectType>* FilterWithCriterium<ObjectType, ValueType, StructureType>::passStructure(StructureType& structure)
+{
+    auto* result = this->passFilterStructure(structure);
+    return result;
 }
 
 

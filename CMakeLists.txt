@@ -3,13 +3,15 @@ project(Szathmary_semestralna_praca)
 
 set(CMAKE_CXX_STANDARD 14)
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 add_executable(
         Szathmary_semestralna_praca
         main.cpp
         criteriums/Criterium.h
         criteriums/CriteriumNazov.cpp
         criteriums/CriteriumNazov.h
-        uzemna_jednotka/UzemnaJednotka.cpp uzemna_jednotka/UzemnaJednotka.h
+        uzemna_jednotka/UzemnaJednotka.h
         structures/_logger/file_log_consumer.cpp
         structures/_logger/file_log_consumer.h
         structures/_logger/logger.cpp
@@ -68,4 +70,4 @@ add_executable(
         structures/utils.cpp
         structures/utils.h
 
-        enums/UzemnaJednotkaTyp.h structures/table/DuplicitySortedSequenceTable.h criteriums/CriteriumVzdelaniePocet.cpp criteriums/CriteriumVzdelaniePocet.h enums/VzdelanieTyp.h enums/VekTyp.h criteriums/CriteriumVzdelaniePodiel.cpp criteriums/CriteriumVzdelaniePodiel.h filters/Filter.h filters/FilterWithCriterium.h filters/FilterBetween.h filters/FilterEquals.h)
+        enums/UzemnaJednotkaTyp.h structures/table/DuplicitySortedSequenceTable.h criteriums/CriteriumVzdelaniePocet.cpp criteriums/CriteriumVzdelaniePocet.h enums/VzdelanieTyp.h enums/VekTyp.h criteriums/CriteriumVzdelaniePodiel.cpp criteriums/CriteriumVzdelaniePodiel.h filters/Filter.h filters/FilterWithCriterium.h filters/FilterBetween.h filters/FilterEquals.h criteriums/CriteriumTyp.cpp criteriums/CriteriumTyp.h filters/CompositeFilter.h input/DataLoader.cpp input/DataLoader.h uzemna_jednotka/Obec.cpp uzemna_jednotka/Obec.h uzemna_jednotka/Okres.cpp uzemna_jednotka/Okres.h uzemna_jednotka/Kraj.cpp uzemna_jednotka/Kraj.h criteriums/CriteriumUzemnaJednotka.h filters/FilterVzdelaniePocet.h filters/FilterVzdelaniePodiel.h structures/list/ArrayListWithObject.h filters/FilterUzemnaJednotkaTyp.h filters/FilterUzemnaJednotkaPrislusnost.h criteriums/CriteriumPrislusnost.cpp criteriums/CriteriumPrislusnost.h)

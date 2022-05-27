@@ -9,16 +9,15 @@
 #include "Criterium.h"
 #include "../uzemna_jednotka//UzemnaJednotka.h"
 #include "../structures/table/DuplicitySortedSequenceTable.h"
+#include "CriteriumUzemnaJednotka.h"
 
 
-class CriteriumNazov : public Criterium<UzemnaJednotka*, std::string>
+class CriteriumNazov : public CriteriumUzemnaJednotka<std::string>
 {
-private:
-    std::string nameToEvaluate;
 public:
     explicit CriteriumNazov();
 
-    std::string evaluate(UzemnaJednotka*& object) override;
+    std::string evaluate(UzemnaJednotka* const& object) override;
 };
 
 

@@ -82,12 +82,11 @@ namespace structures
         /// <remarks> Zabezpecuje polymorfizmus. </remarks>
         Iterator<T>* getEndIterator() override;
 
-    private:
-        /// <summary> Pole s datami. </summary>
-        Array<T>* array_;
+    protected:
+/// <summary> Pole s datami. </summary>
+Array<T>* array_;
         /// <summary> Pocet prvkov v zozname. </summary>
         size_t size_;
-
     private:
         /// <summary> Rozsiri kapacitu zoznamu. </summary>
         void enlarge();
@@ -123,7 +122,7 @@ namespace structures
             /// <remarks> Zvycajne vrati seba. Ak vrati iny iterator, povodny bude automaticky zruseny. </remarks>
             Iterator<T>& operator++() override;
 
-        private:
+        protected:
             /// <summary> Zoznam, cez ktory iteruje. </summary>
             ArrayList<T>* arrayList_;
             /// <summary> Aktualna pozicia v zozname. </summary>

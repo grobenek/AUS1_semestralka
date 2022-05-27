@@ -10,8 +10,9 @@
 #include "../structures/table/DuplicitySortedSequenceTable.h"
 #include "Criterium.h"
 #include "../enums/VzdelanieTyp.h"
+#include "CriteriumUzemnaJednotka.h"
 
-class CriteriumVzdelaniePocet : public Criterium<UzemnaJednotka*, int>
+class CriteriumVzdelaniePocet : public CriteriumUzemnaJednotka<int>
 {
 private:
  VzdelanieTyp vzdelanieTyp;
@@ -19,7 +20,7 @@ private:
 public:
     explicit CriteriumVzdelaniePocet(VzdelanieTyp vzdelanieTyp);
 
-    int evaluate(UzemnaJednotka*& object) override;
+    int evaluate(UzemnaJednotka* const& object) override;
 };
 
 

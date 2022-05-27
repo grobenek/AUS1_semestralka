@@ -7,6 +7,10 @@
 #ifndef SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H
 #define SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H
 
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 using namespace structures;
 
 template<typename K, typename T>
@@ -71,17 +75,20 @@ inline List<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findAll(const
 
         int indexOfPossibleKeys = indexOfFirstFoundKey;
         ++indexOfPossibleKeys;
-        foundItem = this->list_->at(indexOfPossibleKeys);
-        while (foundItem->getKey() == key)
+        if (this->list_->size() > indexOfPossibleKeys)
         {
-            results->add(foundItem);
-            ++indexOfPossibleKeys;
-            if (this->list_->size() > indexOfPossibleKeys)
+            foundItem = this->list_->at(indexOfPossibleKeys);
+            while (foundItem->getKey() == key)
             {
-                foundItem = this->list_->at(indexOfPossibleKeys);
-            } else
-            {
-                break;
+                results->add(foundItem);
+                ++indexOfPossibleKeys;
+                if (this->list_->size() > indexOfPossibleKeys)
+                {
+                    foundItem = this->list_->at(indexOfPossibleKeys);
+                } else
+                {
+                    break;
+                }
             }
         }
         indexOfPossibleKeys = --indexOfFirstFoundKey;

@@ -2,6 +2,16 @@
 #include "structures/table/DuplicitySortedSequenceTable.h"
 #include "criteriums/CriteriumNazov.h"
 #include "criteriums/CriteriumVzdelaniePocet.h"
+#include "uzemna_jednotka/Obec.h"
+#include "filters/FilterVzdelaniePocet.h"
+#include "filters/FilterVzdelaniePodiel.h"
+#include "filters/FilterUzemnaJednotkaTyp.h"
+#include "filters/FilterUzemnaJednotkaPrislusnost.h"
+#include "input/DataLoader.h"
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 
 void spustiSa();
 
@@ -9,63 +19,66 @@ int main()
 {
     spustiSa();
     system("leaks Szathmary_semestralna_praca");
+
+    // musim byt vo folder build-debug
+    // potom dat
+    // pvs-studio-analyzer analyze
+    // potom dat
+    // plog-converter -a GA:1,2 -t fullhtml -o report.tasks PVS-Studio.log
+
     return 0;
 }
 
 void spustiSa()
 {
-    auto* duplicityTable = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
 
-    auto* prva = new UzemnaJednotka(nullptr, nullptr, "1", OBEC);
-    auto* druha = new UzemnaJednotka(nullptr, nullptr, "2", OBEC);
-    auto* array = new structures::Array<int>(8);
-    for (int i = 0; i < 8; ++i)
+    auto* krajeKody = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
+    auto* kraje = DataLoader::nacitajKraj("kraje.csv", *krajeKody);
+//    for (auto item: *krajeKody)
+//    {
+//        std::cout << item->getKey() << std::endl;
+//    }
+
+
+
+    auto* okresyKody = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
+    auto* okresy = DataLoader::nacitajOkres("okresy.csv", *krajeKody, *okresyKody);
+//    for (auto item: *okresy)
+//    {
+//        std::cout << item->accessData()->getOfficialTitle() << std::endl;
+//    }
+
+    auto* obceKody = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
+    auto* obce = DataLoader::nacitajObce("obce.csv", *okresyKody, *obceKody);
+//    for (auto item: *obceKody)
+//    {
+//        std::cout << item->getKey() << std::endl;
+//    }
+
+    DataLoader::nacitajVzdelanie("vzdelanie.csv", *obce, *obceKody);
+    int pocitadlo = 0;
+    for (auto item: *obce)
     {
-        array->at(i) = 10;
-    }
-    druha->setVzdelanieUtriedene(array);
-    auto* tretia = new UzemnaJednotka(nullptr, nullptr, "1", OBEC);
-    auto* stvrta = new UzemnaJednotka(nullptr, nullptr, "3", OBEC);
-    auto* piata = new UzemnaJednotka(nullptr, nullptr, "0", OBEC);
-
-
-    duplicityTable->insert("1", prva);
-    duplicityTable->insert("2", druha);
-    duplicityTable->insert("1", tretia);
-    duplicityTable->insert("3", stvrta);
-    duplicityTable->insert("0", piata);
-
-
-    std::cout << "Size: " << duplicityTable->size() << std::endl;
-
-    std::cout << "Items in table:" << std::endl;
-    for (auto item: *duplicityTable)
-    {
-        std::cout << item->accessData()->getNazov() << std::endl;
-    }
-
-    std::cout << "Found keys:" << std::endl;
-
-    std::string keyToFind = "1";
-    std::cout << "Trying to find item with key " << keyToFind << std::endl;
-    auto* results = duplicityTable->findAll(keyToFind);
-
-    if (results != nullptr)
-    {
-        for (int i = 0; i < results->size(); ++i)
+        if (item->accessData()->getVzdelanieUtriedene() == nullptr)
         {
-            std::cout << results->at(i)->accessData()->getNazov() << std::endl;
+            std::cout << "Nenajdene vzdelanie pre obec : " << item->accessData()->getOfficialTitle() << std::endl;
+            pocitadlo++;
+            continue;
         }
-    } else
-    {
-        std::cout << "No keys were found!" << std::endl;
+        std::cout << "Vzdelanie pre obec :" << item->accessData()->getOfficialTitle() << std::endl;
+        for (int i = 0; i < item->accessData()->getVzdelanieUtriedene()->size(); ++i)
+        {
+            std::cout << item->accessData()->getVzdelanieUtriedene()->at(i) << std::endl;
+        }
+        std::cout << "--------------------------------" << std::endl;
     }
-
-    std::cout << "ContainsKey num. 1?" << std::endl;
-    std::cout << duplicityTable->containsKey("1") << std::endl;
+    std::cout << "Nenajdene data pre: " << pocitadlo << " obci." << std::endl;
 
 
-
-    delete results;
-    delete duplicityTable;
+    delete obce;
+    delete obceKody;
+    delete kraje;
+    delete okresyKody;
+    delete krajeKody;
+    delete okresy;
 }

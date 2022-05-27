@@ -11,7 +11,7 @@ enum UzemnaJednotkaTyp
     OBEC,
     KRAJ,
     OKRES,
-    STAT
+    NEZARADENA
 };
 
 

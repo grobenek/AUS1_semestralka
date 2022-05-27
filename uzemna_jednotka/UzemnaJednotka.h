@@ -2,48 +2,139 @@
 // Created by Peter Szathmáry on 11/05/2022.
 //
 
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 #ifndef SZATHMARY_SEMESTRALNA_PRACA_UZEMNAJEDNOTKA_H
 #define SZATHMARY_SEMESTRALNA_PRACA_UZEMNAJEDNOTKA_H
 
+#include <utility>
+
 #include "../structures/list/array_list.h"
 #include "../enums/UzemnaJednotkaTyp.h"
+#include "../structures/list/ArrayListWithObject.h"
 
 
 class UzemnaJednotka
 {
 protected:
-    structures::ArrayList<int>* vzdelanie;
-    structures::Array<int>* vzdelanieUtriedene;
-    structures::ArrayList<int>* vek;
-    structures::Array<int>* vekUtriedene;
-    int pocetObyvatelov;
+    int pocetObyvatelov = 0;
     UzemnaJednotkaTyp typ;
-    UzemnaJednotka* vyssiUzemnyCelok;
-    std::string nazov;
+    UzemnaJednotka* vyssiUzemnyCelok = nullptr;
+
+    structures::Array<int>* vzdelanieUtriedene = nullptr;
+    structures::Array<int>* vekUtriedene = nullptr;
+
+    ArrayListWithObject<UzemnaJednotka*>* nizsieUzemneJednotky = nullptr;
+
+    std::string code;
+    std::string officialTitle;
+    std::string mediumTitle;
+    std::string shortTitle;
+    std::string note;
+
 public:
-    UzemnaJednotka(structures::ArrayList<int>* vek, structures::ArrayList<int>* vzdelanie, std::string nazov, UzemnaJednotkaTyp typ);
-    //TODO uzemna jednotka si sama prepocita vsetky vzdelanie aj veky a ostatne veci si z nej budu tahat len vysledky
-    void setVyssiUzemnyCelok(UzemnaJednotka* pVyssiUzemnyCelok);
 
-    ~UzemnaJednotka();
+    UzemnaJednotka(std::string code, std::string officialTitle, std::string mediumTitle,
+                   std::string shortTitle, std::string note) : code(std::move(code)),
+                                                               officialTitle(std::move(officialTitle)),
+                                                               mediumTitle(std::move(mediumTitle)),
+                                                               shortTitle(std::move(shortTitle)), note(std::move(note))
+    {
+        this->typ = NEZARADENA;
+    }
 
-    structures::ArrayList<int>* getVzdelanie() const;
+    virtual void pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka) = 0;
 
-    structures::ArrayList<int>* getVek() const;
+    virtual ArrayListWithObject<UzemnaJednotka*>* dajNizsieUzemneJednotky() = 0;
 
-    void setVzdelanieUtriedene(structures::Array<int>* pVzdelanieUtriedene);
+    virtual ~UzemnaJednotka()
+    {
+        delete this->vzdelanieUtriedene;
+        delete this->vekUtriedene;
+        delete this->nizsieUzemneJednotky;
+    }
 
-    int getPocetObyvatelov() const;
+    virtual UzemnaJednotka* clone() = 0;
 
-    UzemnaJednotkaTyp getTyp() const;
 
-    UzemnaJednotka* getVyssiUzemnyCelok() const;
+    structures::Array<int>* getVzdelanieUtriedene() const
+    {
+        return this->vzdelanieUtriedene;
+    }
 
-    const std::string& getNazov() const;
+    structures::Array<int>* getVekUtriedene() const
+    {
+        return vekUtriedene;
+    }
 
-    structures::Array<int>* getVzdelanieUtriedene() const;
+    const std::string& getCode() const
+    {
+        return code;
+    }
 
-    structures::Array<int>* getVekUtriedene() const;
+    const std::string& getOfficialTitle() const
+    {
+        return officialTitle;
+    }
+
+    void setVzdelanieUtriedene(structures::Array<int>* pVzdelanieUtriedene)
+    {
+        delete this->vzdelanieUtriedene;
+        UzemnaJednotka::vzdelanieUtriedene = pVzdelanieUtriedene;
+        this->pocetObyvatelov = 0;
+        for (int i = 0; i < pVzdelanieUtriedene->size(); ++i)
+        {
+            this->pocetObyvatelov += pVzdelanieUtriedene->at(i);
+        }
+    }
+
+    void setVekUtriedene(structures::Array<int>* pVekUtriedene)
+    {
+        delete this->vekUtriedene;
+        UzemnaJednotka::vekUtriedene = pVekUtriedene;
+        this->pocetObyvatelov = 0;
+        for (int i = 0; i < vekUtriedene->size(); ++i)
+        {
+            this->pocetObyvatelov += pVekUtriedene->at(i);
+        }
+    }
+
+    const std::string& getMediumTitle() const
+    {
+        return mediumTitle;
+    }
+
+    const std::string& getShortTitle() const
+    {
+        return shortTitle;
+    }
+
+    const std::string& getNote() const
+    {
+        return note;
+    }
+
+    int getPocetObyvatelov() const
+    {
+        return pocetObyvatelov;
+    }
+
+    UzemnaJednotkaTyp getTyp() const
+    {
+        return typ;
+    }
+
+    UzemnaJednotka* getVyssiUzemnyCelok() const
+    {
+        return vyssiUzemnyCelok;
+    }
+
+    void setVyssiUzemnyCelok(UzemnaJednotka* pVyssiUzemnyCelok)
+    {
+        UzemnaJednotka::vyssiUzemnyCelok = pVyssiUzemnyCelok;
+    }
 };
 
 

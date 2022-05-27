@@ -6,12 +6,18 @@
 
 #include <utility>
 
+// This is a personal academic project. Dear PVS-Studio, please check it.
 
-std::string CriteriumNazov::evaluate(UzemnaJednotka*& object)
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+std::string CriteriumNazov::evaluate(UzemnaJednotka* const& object)
 {
-    return object->getNazov();
+    if (object != nullptr)
+    {
+        return object->getOfficialTitle();
+    }
+    throw std::invalid_argument("nullpointer in CriteriumNazov.evaluate!");
 }
 
 CriteriumNazov::CriteriumNazov()
-{
-}
+= default;
