@@ -16,7 +16,10 @@
 DataLoader::DataLoader()
 = default;
 
-DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajObce(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& okresyKody, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obceKody)
+DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajObce(const std::string& fileName,
+                                                                                    DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& okresy,
+                                                                                    DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& okresyKody,
+                                                                                    DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obceKody)
 {
     auto* obce = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>;
     std::fstream read;
@@ -39,21 +42,38 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajO
     {
         if (wordCounter == 5)
         {
-            novaObec = new Obec(arrayListOfWords->at(0), arrayListOfWords->at(1), arrayListOfWords->at(2), arrayListOfWords->at(3), arrayListOfWords->at(4),
+            novaObec = new Obec(arrayListOfWords->at(0), arrayListOfWords->at(1), arrayListOfWords->at(2),
+                                arrayListOfWords->at(3), arrayListOfWords->at(4),
                                 nullptr, nullptr);
 
             auto* novaObecClone = novaObec->clone();
 
             std::string resultOfStringSplit = novaObecClone->getCode();
 
-            resultOfStringSplit = resultOfStringSplit.substr(3, 3); // ziskam cislo obce
+            resultOfStringSplit = resultOfStringSplit.substr(3, 3); // ziskam cislo okresu z obce
 
-            novaObecClone->setVyssiUzemnyCelok(okresyKody.find(resultOfStringSplit));
+            Okres* najdenyOkres;
+            auto* najdeneOkresy = okresy.findAll(okresyKody.find(resultOfStringSplit)->getOfficialTitle());
+
+            for (auto item: *najdeneOkresy)
+            {
+                std::string okresKod = item->accessData()->getCode();
+                okresKod = okresKod.substr(3, 3);
+
+                if (okresKod == resultOfStringSplit)
+                {
+                    najdenyOkres = dynamic_cast<Okres*>(item->accessData());
+                    break;
+                }
+            }
+
+            novaObecClone->setVyssiUzemnyCelok(najdenyOkres);
             novaObecClone->getVyssiUzemnyCelok()->pridajNizsiuUzemnuJednotku(novaObecClone->clone());
 
             obceKody.insert(novaObecClone->getCode(), novaObecClone->clone());
             obce->insert(novaObecClone->getOfficialTitle(), novaObecClone);
             delete novaObec;
+            delete najdeneOkresy;
             wordCounter = 0;
         }
         if (wordCounter == -1)
@@ -65,7 +85,8 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajO
         wordCounter++;
     }
 
-    novaObec = new Obec(arrayListOfWords->at(0), arrayListOfWords->at(1), arrayListOfWords->at(2), arrayListOfWords->at(3), arrayListOfWords->at(4),
+    novaObec = new Obec(arrayListOfWords->at(0), arrayListOfWords->at(1), arrayListOfWords->at(2),
+                        arrayListOfWords->at(3), arrayListOfWords->at(4),
                         nullptr, nullptr);
 
     auto* novaObecClone = novaObec->clone();
@@ -80,7 +101,6 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajO
     obceKody.insert(novaObecClone->getCode(), novaObecClone->clone());
     obce->insert(novaObecClone->getOfficialTitle(), novaObecClone);
     delete novaObec;
-
 
 
     delete arrayListOfWords;
@@ -158,6 +178,7 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajK
 }
 
 DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajOkres(const std::string& fileName,
+                                                                                     DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& kraje,
                                                                                      DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& krajeKody,
                                                                                      DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& okresyKody)
 {
@@ -194,15 +215,32 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajO
                 resultOfStringSplitOkres = "ZZZ";
             }
 
-            resultOfStringSplit = resultOfStringSplit.substr(3, 2); // ziskam zo stringu len potrebne cislo aby som zistil kraj
+            resultOfStringSplit = resultOfStringSplit.substr(3,
+                                                             2); // ziskam zo stringu len potrebne cislo aby som zistil kraj
 
-            novyOkresClone->setVyssiUzemnyCelok(krajeKody.find(resultOfStringSplit));
+            Kraj* najdenyKraj;
+            auto* najdeneKraje = kraje.findAll(krajeKody.find(resultOfStringSplit)->getOfficialTitle());
+
+            for (auto item: *najdeneKraje)
+            {
+                std::string krajNote = item->accessData()->getNote();
+                krajNote = krajNote.substr(8, 2);
+
+                if (krajNote == resultOfStringSplit)
+                {
+                    najdenyKraj = dynamic_cast<Kraj*>(item->accessData());
+                    break;
+                }
+            }
+
+
+            novyOkresClone->setVyssiUzemnyCelok(najdenyKraj);
             novyOkresClone->getVyssiUzemnyCelok()->pridajNizsiuUzemnuJednotku(novyOkresClone->clone());
-
 
             okresyKody.insert(resultOfStringSplitOkres, novyOkresClone->clone());
             okresy->insert(novyOkresClone->getOfficialTitle(), novyOkresClone);
             delete novyOkres;
+            delete najdeneKraje;
             wordCounter = 0;
         }
         if (wordCounter == -1)
@@ -259,7 +297,8 @@ void DataLoader::nacitajVzdelanie(const std::string& fileName,
         std::string delimiter = ";";
         size_t pos = 0;
         std::string token;
-        while ((pos = word.find(delimiter)) != std::string::npos) {
+        while ((pos = word.find(delimiter)) != std::string::npos)
+        {
             token = word.substr(0, pos);
             arrayListOfWords->at(wordCounter) = token;
             word.erase(0, pos + delimiter.length());
@@ -278,8 +317,8 @@ void DataLoader::nacitajVzdelanie(const std::string& fileName,
             {
                 if (item->accessData()->getCode() == kodObce)
                 {
-                 najdenaObec = dynamic_cast<Obec*>(item->accessData());
-                 break;
+                    najdenaObec = dynamic_cast<Obec*>(item->accessData());
+                    break;
                 }
             }
             auto* vzdelanie = new structures::Array<int>(8);
@@ -325,13 +364,14 @@ DataLoader::nacitajVek(const std::string& fileName, DuplicitySortedSequenceTable
         std::string delimiter = ";";
         size_t pos = 0;
         std::string token;
-        while ((pos = word.find(delimiter)) != std::string::npos) {
+        while ((pos = word.find(delimiter)) != std::string::npos)
+        {
             token = word.substr(0, pos);
             arrayListOfWords->at(wordCounter) = token;
             word.erase(0, pos + delimiter.length());
             wordCounter++;
         }
-        arrayListOfWords->at(9) = word.substr(0, word.size() - 1);
+        arrayListOfWords->at(203) = word.substr(0, word.size() - 1);
 
         if (wordCounter == 203)
         {
@@ -348,10 +388,10 @@ DataLoader::nacitajVek(const std::string& fileName, DuplicitySortedSequenceTable
                     break;
                 }
             }
-            auto* vek = new structures::Array<int>(8);
+            auto* vek = new structures::Array<int>(204);
 
 
-            for (int i = 0; i < 8; ++i)
+            for (int i = 0; i < 202; ++i)
             {
                 vek->at(i) = std::stoi(arrayListOfWords->at(i + 2)); //zmena zo str na int
             }

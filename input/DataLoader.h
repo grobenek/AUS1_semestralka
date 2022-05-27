@@ -14,15 +14,26 @@ private:
 public:
     explicit DataLoader();
 
-    static DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* nacitajObce(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& okresyKody, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obceKody);
+    static DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*
+    nacitajObce(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& okresy,
+                DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& okresyKody,
+                DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obceKody);
 
-    static DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* nacitajOkres(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& krajeKody, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& okresyKody);
+    static DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*
+    nacitajOkres(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& kraje,
+                 DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& krajeKody,
+                 DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& okresyKody);
 
-    static DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* nacitajKraj(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& krajeKody);
+    static DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>*
+    nacitajKraj(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& krajeKody);
 
-    static void nacitajVzdelanie(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obce, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obceKody);
+    static void
+    nacitajVzdelanie(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obce,
+                     DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obceKody);
 
-    static void nacitajVek(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obce, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obceKody);
+    static void
+    nacitajVek(const std::string& fileName, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obce,
+               DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& obceKody);
 
 };
 

@@ -54,7 +54,7 @@ void Okres::pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka)
     }
 }
 
-ArrayListWithObject<UzemnaJednotka*>* Okres::dajNizsieUzemneJednotky()
+structures::ArrayList<UzemnaJednotka*>* Okres::dajNizsieUzemneJednotky()
 {
     return this->nizsieUzemneJednotky;
 }

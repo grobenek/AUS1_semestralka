@@ -52,7 +52,7 @@ void Obec::pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka)
     throw std::logic_error("pridajNizsiuUzemnuJednotku in Obec is not implemented!");
 }
 
-ArrayListWithObject<UzemnaJednotka*>* Obec::dajNizsieUzemneJednotky()
+structures::ArrayList<UzemnaJednotka*>* Obec::dajNizsieUzemneJednotky()
 {
     throw std::logic_error("dajNizsieUzemneJednotky in Obec is not implemented!");
 }

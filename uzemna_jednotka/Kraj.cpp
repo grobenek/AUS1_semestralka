@@ -51,7 +51,7 @@ void Kraj::pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka)
     }
 }
 
-ArrayListWithObject<UzemnaJednotka*>* Kraj::dajNizsieUzemneJednotky()
+structures::ArrayList<UzemnaJednotka*>* Kraj::dajNizsieUzemneJednotky()
 {
     return this->nizsieUzemneJednotky;
 }

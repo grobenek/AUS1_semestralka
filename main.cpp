@@ -34,26 +34,21 @@ void spustiSa()
 
     auto* krajeKody = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
     auto* kraje = DataLoader::nacitajKraj("kraje.csv", *krajeKody);
-//    for (auto item: *krajeKody)
-//    {
-//        std::cout << item->getKey() << std::endl;
-//    }
-
 
 
     auto* okresyKody = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
-    auto* okresy = DataLoader::nacitajOkres("okresy.csv", *krajeKody, *okresyKody);
+    auto* okresy = DataLoader::nacitajOkres("okresy.csv", *kraje, *krajeKody, *okresyKody);
 //    for (auto item: *okresy)
 //    {
 //        std::cout << item->accessData()->getOfficialTitle() << std::endl;
 //    }
 
     auto* obceKody = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
-    auto* obce = DataLoader::nacitajObce("obce.csv", *okresyKody, *obceKody);
-//    for (auto item: *obceKody)
-//    {
-//        std::cout << item->getKey() << std::endl;
-//    }
+    auto* obce = DataLoader::nacitajObce("obce.csv", *okresy, *okresyKody, *obceKody);
+    for (auto item: *obceKody)
+    {
+        std::cout << item->getKey() << std::endl;
+    }
 
     DataLoader::nacitajVzdelanie("vzdelanie.csv", *obce, *obceKody);
     int pocitadlo = 0;
@@ -74,6 +69,36 @@ void spustiSa()
     }
     std::cout << "Nenajdene data pre: " << pocitadlo << " obci." << std::endl;
 
+
+    DataLoader::nacitajVek("vek.csv", *obce, *obceKody);
+    int pocitadloVek = 0;
+    for (auto item: *obce)
+    {
+        if (item->accessData()->getVekUtriedene() == nullptr)
+        {
+            std::cout << "Nenajdene vek pre obec : " << item->accessData()->getOfficialTitle() << std::endl;
+            pocitadloVek++;
+            continue;
+        }
+        std::cout << "Vek pre obec :" << item->accessData()->getOfficialTitle() << std::endl;
+        for (int i = 0; i < item->accessData()->getVekUtriedene()->size(); ++i)
+        {
+            std::cout << item->accessData()->getVekUtriedene()->at(i) << std::endl;
+        }
+        std::cout << "--------------------------------" << std::endl;
+    }
+    std::cout << "Nenajdene data pre: " << pocitadloVek << " obci." << std::endl;
+
+
+    for (auto item: *okresy)
+    {
+        std::cout << item->accessData()->getOfficialTitle() << " - ";
+        for (int i = 0; i < item->accessData()->getVyssiUzemnyCelok()->getVekUtriedene()->size(); ++i)
+        {
+            std::cout << item->accessData()->getVyssiUzemnyCelok()->getVekUtriedene()->at(i) << " ";
+        }
+        std::cout << std::endl;
+    }
 
     delete obce;
     delete obceKody;

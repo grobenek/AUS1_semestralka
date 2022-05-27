@@ -26,7 +26,7 @@ protected:
     structures::Array<int>* vzdelanieUtriedene = nullptr;
     structures::Array<int>* vekUtriedene = nullptr;
 
-    ArrayListWithObject<UzemnaJednotka*>* nizsieUzemneJednotky = nullptr;
+    structures::ArrayList<UzemnaJednotka*>* nizsieUzemneJednotky = nullptr;
 
     std::string code;
     std::string officialTitle;
@@ -47,7 +47,7 @@ public:
 
     virtual void pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka) = 0;
 
-    virtual ArrayListWithObject<UzemnaJednotka*>* dajNizsieUzemneJednotky() = 0;
+    virtual structures::ArrayList<UzemnaJednotka*>* dajNizsieUzemneJednotky() = 0;
 
     virtual ~UzemnaJednotka()
     {
@@ -86,6 +86,8 @@ public:
         this->pocetObyvatelov = 0;
         for (int i = 0; i < pVzdelanieUtriedene->size(); ++i)
         {
+            this->getVyssiUzemnyCelok()->getVzdelanieUtriedene()->at(i) += pVzdelanieUtriedene->at(i);
+            this->getVyssiUzemnyCelok()->getVyssiUzemnyCelok()->getVzdelanieUtriedene()->at(i) += pVzdelanieUtriedene->at(i);
             this->pocetObyvatelov += pVzdelanieUtriedene->at(i);
         }
     }
@@ -95,8 +97,10 @@ public:
         delete this->vekUtriedene;
         UzemnaJednotka::vekUtriedene = pVekUtriedene;
         this->pocetObyvatelov = 0;
-        for (int i = 0; i < vekUtriedene->size(); ++i)
+        for (int i = 0; i < pVekUtriedene->size() - 2; ++i)
         {
+            this->getVyssiUzemnyCelok()->getVekUtriedene()->at(i) += pVekUtriedene->at(i + 2);
+            this->getVyssiUzemnyCelok()->getVyssiUzemnyCelok()->getVekUtriedene()->at(i) += pVekUtriedene->at(i + 2);
             this->pocetObyvatelov += pVekUtriedene->at(i);
         }
     }

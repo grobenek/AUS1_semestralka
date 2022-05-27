@@ -20,7 +20,7 @@ public:
 
     void pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka) override;
 
-    ArrayListWithObject<UzemnaJednotka*>* dajNizsieUzemneJednotky() override;
+    structures::ArrayList<UzemnaJednotka*>* dajNizsieUzemneJednotky() override;
 };
 
 
