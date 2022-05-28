@@ -9,6 +9,7 @@
 #include "filters/FilterUzemnaJednotkaPrislusnost.h"
 #include "input/DataLoader.h"
 #include "sorting/ShellSort.h"
+#include "output/ConsoleOutput.h"
 
 // This is a personal academic project. Dear PVS-Studio, please check it.
 
@@ -116,8 +117,98 @@ void spustiSa()
 //    }
 
 
-
+    bool run = true;
     std::cout << "Vitaj v semestralnej aplikacii Petra szathmaryho!" << std::endl;
+    do
+    {
+        ConsoleOutput::printGeneralChoices();
+        std::string choice = ConsoleOutput::readChoiceWord();
+
+        int numberChoice;
+        try
+        {
+            numberChoice = std::stoi(choice);
+        } catch (std::invalid_argument& exception)
+        {
+            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+            continue;
+        }
+        switch (numberChoice)
+        {
+            case 1:
+            { // bodove filtrovanie
+                ConsoleOutput::printPointSeachChoices();
+                std::string choiceOfPointSearch = ConsoleOutput::readChoiceWord();
+
+                switch (std::stoi(choiceOfPointSearch))
+                {
+                    case 1: //obce
+                    {
+                        std::cout << "priklad: Topoľčany" << std::endl << "Zadavat s diakritikou a velkymi pismenami!" << std::endl;
+                        ConsoleOutput::printInputName();
+                        std::string choiceOfPointSeachUzemnaJednotka = ConsoleOutput::readChoiceRow();
+                        ConsoleOutput::newLine();
+
+
+                        auto* results = obce->findAll(choiceOfPointSeachUzemnaJednotka);
+                        if (results == nullptr)
+                        {
+                            std::cout << "Nenajdena ziadna zhoda!" << std::endl;
+                            break;
+                        }
+                        ConsoleOutput::printResultChoicestitlesTableItem(*results);
+                        delete results;
+                        break;
+                    }
+                    case 2:
+                    {
+                        std::cout << "priklad: Okres Senec" << std::endl << "Zadavat s diakritikou a velkymi pismenami!" << std::endl;
+                        ConsoleOutput::printInputName();
+                        std::string choiceOfPointSeachUzemnaJednotka = ConsoleOutput::readChoiceRow();
+                        ConsoleOutput::newLine();
+
+
+                        auto* results = okresy->findAll(choiceOfPointSeachUzemnaJednotka);
+                        if (results == nullptr)
+                        {
+                            std::cout << "Nenajdena ziadna zhoda!" << std::endl;
+                            break;
+                        }
+                        ConsoleOutput::printResultChoicestitlesTableItem(*results);
+                        delete results;
+                        break;
+                    }
+                    case 3:
+                    {
+                        std::cout << "priklad: Žilinský kraj" << std::endl << "Zadavat s diakritikou a velkymi pismenami!" << std::endl;
+                        ConsoleOutput::printInputName();
+                        std::string choiceOfPointSeachUzemnaJednotka = ConsoleOutput::readChoiceRow();
+                        ConsoleOutput::newLine();
+
+
+                        auto* results = kraje->findAll(choiceOfPointSeachUzemnaJednotka);
+                        if (results == nullptr)
+                        {
+                            std::cout << "Nenajdena ziadna zhoda!" << std::endl;
+                            break;
+                        }
+                        ConsoleOutput::printResultChoicestitlesTableItem(*results);
+                        delete results;
+                        break;
+                    }
+                }
+                break;
+            }
+            case 2:
+                break;
+            case 9:
+                run = false;
+                break;
+            default:
+                std::cout << "Zle zadana moznost!" << std::endl;
+                break;
+        }
+    } while (run);
 
 
 
