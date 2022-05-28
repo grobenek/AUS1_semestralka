@@ -8,6 +8,7 @@
 #include "filters/FilterUzemnaJednotkaTyp.h"
 #include "filters/FilterUzemnaJednotkaPrislusnost.h"
 #include "input/DataLoader.h"
+#include "sorting/ShellSort.h"
 
 // This is a personal academic project. Dear PVS-Studio, please check it.
 
@@ -45,60 +46,83 @@ void spustiSa()
 
     auto* obceKody = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
     auto* obce = DataLoader::nacitajObce("obce.csv", *okresy, *okresyKody, *obceKody);
-    for (auto item: *obceKody)
-    {
-        std::cout << item->getKey() << std::endl;
-    }
+//    for (auto item: *obceKody)
+//    {
+//        std::cout << item->getKey() << std::endl;
+//    }
 
     DataLoader::nacitajVzdelanie("vzdelanie.csv", *obce, *obceKody);
-    int pocitadlo = 0;
-    for (auto item: *obce)
-    {
-        if (item->accessData()->getVzdelanieUtriedene() == nullptr)
-        {
-            std::cout << "Nenajdene vzdelanie pre obec : " << item->accessData()->getOfficialTitle() << std::endl;
-            pocitadlo++;
-            continue;
-        }
-        std::cout << "Vzdelanie pre obec :" << item->accessData()->getOfficialTitle() << std::endl;
-        for (int i = 0; i < item->accessData()->getVzdelanieUtriedene()->size(); ++i)
-        {
-            std::cout << item->accessData()->getVzdelanieUtriedene()->at(i) << std::endl;
-        }
-        std::cout << "--------------------------------" << std::endl;
-    }
-    std::cout << "Nenajdene data pre: " << pocitadlo << " obci." << std::endl;
+//    int pocitadlo = 0;
+//    for (auto item: *obce)
+//    {
+//        if (item->accessData()->getVzdelanieUtriedene() == nullptr)
+//        {
+//            std::cout << "Nenajdene vzdelanie pre obec : " << item->accessData()->getOfficialTitle() << std::endl;
+//            pocitadlo++;
+//            continue;
+//        }
+//        std::cout << "Vzdelanie pre obec :" << item->accessData()->getOfficialTitle() << std::endl;
+//        for (int i = 0; i < item->accessData()->getVzdelanieUtriedene()->size(); ++i)
+//        {
+//            std::cout << item->accessData()->getVzdelanieUtriedene()->at(i) << std::endl;
+//        }
+//        std::cout << "--------------------------------" << std::endl;
+//    }
+//    std::cout << "Nenajdene data pre: " << pocitadlo << " obci." << std::endl;
 
 
     DataLoader::nacitajVek("vek.csv", *obce, *obceKody);
-    int pocitadloVek = 0;
-    for (auto item: *obce)
-    {
-        if (item->accessData()->getVekUtriedene() == nullptr)
-        {
-            std::cout << "Nenajdene vek pre obec : " << item->accessData()->getOfficialTitle() << std::endl;
-            pocitadloVek++;
-            continue;
-        }
-        std::cout << "Vek pre obec :" << item->accessData()->getOfficialTitle() << std::endl;
-        for (int i = 0; i < item->accessData()->getVekUtriedene()->size(); ++i)
-        {
-            std::cout << item->accessData()->getVekUtriedene()->at(i) << std::endl;
-        }
-        std::cout << "--------------------------------" << std::endl;
-    }
-    std::cout << "Nenajdene data pre: " << pocitadloVek << " obci." << std::endl;
+//    int pocitadloVek = 0;
+//    for (auto item: *obce)
+//    {
+//        if (item->accessData()->getVekUtriedene() == nullptr)
+//        {
+//            std::cout << "Nenajdene vek pre obec : " << item->accessData()->getOfficialTitle() << std::endl;
+//            pocitadloVek++;
+//            continue;
+//        }
+//        std::cout << "Vek pre obec :" << item->accessData()->getOfficialTitle() << std::endl;
+//        for (int i = 0; i < item->accessData()->getVekUtriedene()->size(); ++i)
+//        {
+//            std::cout << item->accessData()->getVekUtriedene()->at(i) << std::endl;
+//        }
+//        std::cout << "--------------------------------" << std::endl;
+//    }
+//    std::cout << "Nenajdene data pre: " << pocitadloVek << " obci." << std::endl;
+//
+//
+//    for (auto item: *okresy)
+//    {
+//        std::cout << item->accessData()->getOfficialTitle() << " - ";
+//        for (int i = 0; i < item->accessData()->getVyssiUzemnyCelok()->getVekUtriedene()->size(); ++i)
+//        {
+//            std::cout << item->accessData()->getVyssiUzemnyCelok()->getVekUtriedene()->at(i) << " ";
+//        }
+//        std::cout << std::endl;
+//    }
+
+    //TODO skusit filtre, spravit triedenie a ovladanie pomocou konzole - inspirovat sa AUS console
 
 
-    for (auto item: *okresy)
-    {
-        std::cout << item->accessData()->getOfficialTitle() << " - ";
-        for (int i = 0; i < item->accessData()->getVyssiUzemnyCelok()->getVekUtriedene()->size(); ++i)
-        {
-            std::cout << item->accessData()->getVyssiUzemnyCelok()->getVekUtriedene()->at(i) << " ";
-        }
-        std::cout << std::endl;
-    }
+    //TODO spravit prislusnost aj pre vyssie uzemne jednotky
+//    auto* filterPrislusnost = new FilterUzemnaJednotkaPrislusnost("Okres Trebišov");
+//
+//    auto* resultOfFilterPocet = filterPrislusnost->passStructure(*obce);
+//
+//    ShellSort<int>::sort(*resultOfFilterPocet, new CriteriumVzdelaniePocet(VYSOKOSKOLSKE), true);
+//    for (auto item: *resultOfFilterPocet)
+//    {
+//        std::cout << item->getVyssiUzemnyCelok()->getOfficialTitle() << " : " << item->getOfficialTitle() << " - " << item->getVzdelanieUtriedene()->at(VYSOKOSKOLSKE) << std::endl;
+//    }
+
+
+
+    std::cout << "Vitaj v semestralnej aplikacii Petra szathmaryho!" << std::endl;
+
+
+
+
+
 
     delete obce;
     delete obceKody;

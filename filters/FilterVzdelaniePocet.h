@@ -17,7 +17,7 @@
 class FilterVzdelaniePocet : public FilterBetween<UzemnaJednotka*, int, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>
 {
 public:
-    FilterVzdelaniePocet(int valueMax, int valueMin, VzdelanieTyp vzdelanieTyp)
+    FilterVzdelaniePocet(int valueMin, int valueMax, VzdelanieTyp vzdelanieTyp)
             : FilterBetween(new CriteriumVzdelaniePocet(vzdelanieTyp), valueMin, valueMax)
     {}
 
@@ -39,11 +39,6 @@ protected:
                 auto* newItem = item->accessData()->clone();
                 result->add(newItem);
             }
-        }
-        if (result->isEmpty())
-        {
-            delete result;
-            result = nullptr;
         }
         return result;
     }

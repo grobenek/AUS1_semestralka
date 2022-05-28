@@ -8,14 +8,14 @@
 
 #include "CriteriumPrislusnost.h"
 
-UzemnaJednotka* CriteriumPrislusnost::evaluate(UzemnaJednotka* const& object)
+CriteriumPrislusnost::CriteriumPrislusnost()
+= default;
+
+std::string CriteriumPrislusnost::evaluate(UzemnaJednotka* const& object)
 {
     if (object != nullptr)
     {
-        return object->getVyssiUzemnyCelok();
+        return object->getVyssiUzemnyCelok()->getOfficialTitle(); //TODO prerobit - zisti na izbe
     }
     throw std::invalid_argument("NullPointer in CriteriumPrislusnost.evaluate!");
 }
-
-CriteriumPrislusnost::CriteriumPrislusnost()
-{}

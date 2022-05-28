@@ -7,14 +7,16 @@
 
 
 #include "CriteriumUzemnaJednotka.h"
+#include "CriteriumString.h"
 
-class CriteriumPrislusnost : public CriteriumUzemnaJednotka<UzemnaJednotka*>
+class CriteriumPrislusnost : public CriteriumString
 {
 public:
     CriteriumPrislusnost();
 
 private:
-    UzemnaJednotka* evaluate(UzemnaJednotka* const& object) override;
+public:
+    std::string evaluate(UzemnaJednotka* const& object) override;
 };
 
 

@@ -16,6 +16,10 @@ CriteriumVzdelaniePocet::evaluate(UzemnaJednotka* const& object)
 {
     if (object != nullptr)
     {
+        if (object->getVzdelanieUtriedene() == nullptr)
+        {
+            return -1;
+        }
         int result = object->getVzdelanieUtriedene()->at(vzdelanieTyp);
 
         return result;

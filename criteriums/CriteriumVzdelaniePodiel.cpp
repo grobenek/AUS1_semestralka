@@ -16,8 +16,14 @@ CriteriumVzdelaniePodiel::evaluate(UzemnaJednotka* const& object)
 {
     if (object != nullptr)
     {
+        if (object->getVzdelanieUtriedene() == nullptr)
+        {
+            return -1.0;
+        }
+
         double result = (1.0 * object->getVzdelanieUtriedene()->at(vzdelanieTyp) / object->getPocetObyvatelov()) *
-                     100;
+                        100;
+        //TODO vypis
         return result;
     }
     throw std::invalid_argument("nullpointer in criteriumVzdelaniePodiel.evaluate!");

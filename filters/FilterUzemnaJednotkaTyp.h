@@ -20,11 +20,11 @@
 class FilterUzemnaJednotkaTyp : public FilterEquals<UzemnaJednotka*, UzemnaJednotkaTyp, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>
 {
 public:
-//    FilterVzdelaniePodiel(UzemnaJednotkaTyp value, VzdelanieTyp vzdelanieTyp)
-//            : FilterEquals(value, new CriteriumTyp(vzdelanieTyp))
+//    FilterVzdelaniePodiel(UzemnaJednotkaTyp typ, VzdelanieTyp vzdelanieTyp)
+//            : FilterEquals(typ, new CriteriumTyp(vzdelanieTyp))
 //    {}
-    explicit FilterUzemnaJednotkaTyp(UzemnaJednotkaTyp value)
-            : FilterEquals(new CriteriumTyp(), value)
+    explicit FilterUzemnaJednotkaTyp(UzemnaJednotkaTyp typ)
+            : FilterEquals(new CriteriumTyp(), typ)
     {}
 
 protected:
@@ -47,11 +47,6 @@ protected:
                 auto* newItem = item->accessData()->clone();
                 result->add(newItem);
             }
-        }
-        if (result->isEmpty())
-        {
-            delete result;
-            result = nullptr;
         }
         return result;
     }

@@ -6,6 +6,8 @@
 #define SZATHMARY_SEMESTRALNA_PRACA_FILTERUZEMNAJEDNOTKAPRISLUSNOST_H
 
 
+#include <utility>
+
 #include "../uzemna_jednotka/UzemnaJednotka.h"
 #include "../structures/table/DuplicitySortedSequenceTable.h"
 #include "FilterEquals.h"
@@ -17,15 +19,15 @@
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 
 class FilterUzemnaJednotkaPrislusnost
-        : public FilterEquals<UzemnaJednotka*, UzemnaJednotka*, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>
+: public FilterEquals<UzemnaJednotka*, std::string, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>
 {
 public:
-    explicit FilterUzemnaJednotkaPrislusnost(UzemnaJednotka* value)
-    : FilterEquals(new CriteriumPrislusnost(), value)
+    explicit FilterUzemnaJednotkaPrislusnost(std::string nazovNadradenejUzemnejJednotky)
+    : FilterEquals(new CriteriumPrislusnost(), std::move(nazovNadradenejUzemnejJednotky))
     {}
 
 protected:
-    bool passFilter(UzemnaJednotka* valueToEvaluate) override
+    bool passFilter(std::string valueToEvaluate) override
     {
         return FilterEquals::passFilter(valueToEvaluate);
     }
@@ -33,6 +35,19 @@ protected:
     List<UzemnaJednotka*>*
     passFilterStructure(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& structure) override
     {
+        auto* result = new ArrayListWithObject<UzemnaJednotka*>();
+
+        for (auto* item: structure)
+        {
+            if (this->passItem(item->accessData()))
+            {
+                auto* newItem = item->accessData()->clone();
+                result->add(newItem);
+            }
+        }
+
+        return result;
+
     }
 };
 

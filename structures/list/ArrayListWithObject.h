@@ -5,9 +5,6 @@
 #ifndef SZATHMARY_SEMESTRALNA_PRACA_ARRAYLISTWITHOBJECT_H
 #define SZATHMARY_SEMESTRALNA_PRACA_ARRAYLISTWITHOBJECT_H
 
-
-#include "linked_list.h"
-
 template<typename ObjectType>
 class ArrayListWithObject : public structures::ArrayList<ObjectType>
 {
@@ -24,6 +21,8 @@ public:
         this->array_ = nullptr;
         this->size_ = 0;
     }
+
+
 };
 
 

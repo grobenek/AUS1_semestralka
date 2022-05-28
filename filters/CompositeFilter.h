@@ -28,31 +28,16 @@ public:
         }
     }
 
-private:
-    structures::List<ObjectType>* passStructure(StructureType& structure) override
+    CompositeFilter()
     {
-        auto* result = new ArrayListWithObject<ObjectType>();
-
-        for (auto item: structure)
-        {
-            bool passed = true;
-            for (int i = 0; i < this->filters.size(); ++i)
-            {
-                passed = this->filters.at(i)->passItem(item);
-                if (!passed)
-                {
-                    break;
-                }
-            }
-            result->add(item);
-        }
-        if (result->size() == 0)
-        {
-            delete result;
-            result = nullptr;
-        }
-        return result;
+        this->filters = new ArrayListWithObject<Filter<ObjectType, StructureType>>;
     }
+
+    virtual ~CompositeFilter()
+    {
+        delete this->filters;
+    }
+
 };
 
 
