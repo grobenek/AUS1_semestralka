@@ -1,3 +1,7 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //
 // Created by Peter Szathmáry on 22/05/2022.
 //
@@ -14,7 +18,7 @@ template<typename ObjectType, typename StructureType>
 class CompositeFilter : public Filter<ObjectType, StructureType>
 {
 protected:
-    ArrayListWithObject<Filter<ObjectType, StructureType>*> filters;
+    ArrayListWithObject<Filter<ObjectType, StructureType>*>* filters;
 
 public:
     void registerFilter(Filter<ObjectType, StructureType>* filter)
@@ -28,9 +32,11 @@ public:
         }
     }
 
+public:
+
     CompositeFilter()
     {
-        this->filters = new ArrayListWithObject<Filter<ObjectType, StructureType>>;
+        this->filters = new ArrayListWithObject<Filter<ObjectType, StructureType>*>;
     }
 
     virtual ~CompositeFilter()

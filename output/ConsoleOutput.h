@@ -21,6 +21,12 @@ public:
     static std::string readChoiceWord();
     static std::string readChoiceRow();
     static void printPointSeachChoices();
+    static void printFilterMinValue();
+    static void printTypVzdelania();
+    static VzdelanieTyp getTypVzdelanie(int choice);
+    static void printFilterMaxValue();
+    static void printFiltersChoiceKind();
+    static void printFiltersChoices();
     static void printInputName();
     static void newLine();
 
@@ -148,6 +154,75 @@ std::string ConsoleOutput::readChoiceRow()
     std::getline(std::cin, choice); // nacitam cely riadok
     std::cout << std::endl;
     return choice;
+}
+
+void ConsoleOutput::printFiltersChoices()
+{
+    std::cout << "------------------------------------" << std::endl;
+    std::cout << "1. FilterVzdelaniePocet" << std::endl;
+    std::cout << "2. FilterVzdelaniePodiel" << std::endl;
+    std::cout << "3. FilterUzemnaJednotkaPrislusnost" << std::endl;
+    std::cout << "4. FilterUzemnaJednotkaTyp" << std::endl;
+    std::cout << std::endl;
+    std::cout << "0. Koniec zadavania filtrov" << std::endl;
+    std::cout << "------------------------------------" << std::endl;
+}
+
+void ConsoleOutput::printFiltersChoiceKind()
+{
+    std::cout << "------------------------------------" << std::endl;
+    std::cout << "1. FilterAND" << std::endl;
+    std::cout << "2. FilterOR" << std::endl;
+    std::cout << "------------------------------------" << std::endl;
+}
+
+void ConsoleOutput::printFilterMinValue()
+{
+    std::cout << "Minimalna hodnota filtrovania ";
+}
+
+void ConsoleOutput::printFilterMaxValue()
+{
+    std::cout << "Maximalna hodnota filtrovania ";
+}
+
+void ConsoleOutput::printTypVzdelania()
+{
+    std::cout << "-----------------------------------------" << std::endl;
+    std::cout << "1. Bez ukonceneho vzdelania do 14 rokov" << std::endl;
+    std::cout << "2. Zakladne vzdelanie" << std::endl;
+    std::cout << "3. Ucnovske vzdelanie" << std::endl;
+    std::cout << "4. Stredne vzdelanie" << std::endl;
+    std::cout << "5. Vyssie vzdelanie" << std::endl;
+    std::cout << "6. Vysokoskolske vzdelanie" << std::endl;
+    std::cout << "7. Bez ukonceneho vzdelania od 15 rokov" << std::endl;
+    std::cout << "8. Nezistene vzdelanie" << std::endl;
+    std::cout << "-----------------------------------------" << std::endl;
+}
+
+VzdelanieTyp ConsoleOutput::getTypVzdelanie(int choice)
+{
+    switch (choice)
+    {
+        case 0:
+            return BEZ_UKONCENEHO_DO_14;
+        case 1:
+            return ZAKLADNE;
+        case 2:
+            return UCNOVSKE;
+        case 3:
+            return STREDNE;
+        case 4:
+            return VYSSIE;
+        case 5:
+            return VYSOKOSKOLSKE;
+        case 6:
+            return BEZ_VZDELANIE_OD_15;
+        case 7:
+            return NEZISTENE;
+        default:
+            throw std::invalid_argument("Invalid argument in ConsoleOutput::getTypVzdelanie");
+            break;
 }
 
 

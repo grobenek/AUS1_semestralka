@@ -15,7 +15,7 @@ class Filter
 
     virtual structures::List<ObjectType>* passStructure(StructureType& structure) = 0;
 
-protected:
+public:
     virtual bool passItem(ObjectType& object) = 0;
 };
 

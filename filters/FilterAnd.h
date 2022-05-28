@@ -1,3 +1,8 @@
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //
 // Created by Peter Szathmáry on 28/05/2022.
 //
@@ -5,41 +10,50 @@
 #ifndef SZATHMARY_SEMESTRALNA_PRACA_FILTERAND_H
 #define SZATHMARY_SEMESTRALNA_PRACA_FILTERAND_H
 
+#include "../uzemna_jednotka/UzemnaJednotka.h"
+#include "../structures/table/DuplicitySortedSequenceTable.h"
 
-#include "CompositeFilter.h"
-
-template<typename ObjectType, typename StructureType>
-class FilterAnd : public CompositeFilter<ObjectType, StructureType>
+class FilterAnd : public CompositeFilter<UzemnaJednotka*, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>
 {
 public:
-    FilterAnd() : CompositeFilter<ObjectType, StructureType>()
+    FilterAnd() : CompositeFilter<UzemnaJednotka*, DuplicitySortedSequenceTable<std::string, UzemnaJednotka *>>()
+    {}
+
+
+    bool passItem(UzemnaJednotka*& object) override
     {
+        bool passed = true;
+        for (int i = 0; i < this->filters->size(); ++i)
+        {
+            passed = this->filters->at(i)->passItem(object);
+            if (!passed)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 
 private:
-    structures::List<ObjectType>* passStructure(StructureType& structure) override
+    List<UzemnaJednotka*>* passStructure(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& structure) override
     {
-        auto* result = new ArrayListWithObject<ObjectType>();
+        auto* results = new ArrayListWithObject<UzemnaJednotka*>();
 
+        bool passed = true;
         for (auto item: structure)
         {
-            bool passed = true;
-            for (int i = 0; i < this->filters.size(); ++i)
+            passed = this->passItem(item->accessData());
+            if (passed)
             {
-                passed = this->filters.at(i)->passItem(item);
-                if (!passed)
-                {
-                    break;
-                }
+                results->add(item->accessData());
             }
-            result->add(item);
         }
-        if (result->size() == 0)
+        if (results->size() == 0)
         {
-            delete result;
-            result = nullptr;
+            delete results;
+            results = nullptr;
         }
-        return result;
+        return results;
     }
 };
 
