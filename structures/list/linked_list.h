@@ -113,7 +113,7 @@ namespace structures
         /// <remarks> Zabezpecuje polymorfizmus. </remarks>
         Iterator<T>* getEndIterator() override;
 
-    private:
+    protected:
         /// <summary> Pocet prvkov v zozname. </summary>
         size_t size_;
         /// <summary> Prvy prvok zoznamu. </summary>
@@ -164,7 +164,6 @@ namespace structures
             LinkedListItem<T>* position_;
         };
     };
-    //TODO LEAK V LINKEDLIST
 
     template<typename T>
     inline LinkedListItem<T>::LinkedListItem(T data) :
@@ -216,7 +215,7 @@ namespace structures
     template<typename T>
     inline LinkedList<T>::~LinkedList()
     {
-        clear();
+        this->clear();
     }
 
     template<typename T>

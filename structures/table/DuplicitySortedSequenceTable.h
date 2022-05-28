@@ -7,6 +7,10 @@
 #ifndef SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H
 #define SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H
 
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 using namespace structures;
 
 template<typename K, typename T>
@@ -17,13 +21,16 @@ public:
 
     void insert(const K& key, const T& data);
 
-    ArrayList<TableItem<K, T>*>* findTableItems(const K& key);
+    List<TableItem<K, T>*>* findAll(const K& key);
+
+    ~DuplicitySortedSequenceTable();
 
 };
 
 template<typename K, typename T>
 inline void DuplicitySortedSequenceTable<K, T>::insert(const K& key, const T& data)
 {
+
     if (this->size() == 0)
     {
         this->list_->add(new structures::TableItem<K, T>(key, data));
@@ -54,7 +61,7 @@ inline DuplicitySortedSequenceTable<K, T>::DuplicitySortedSequenceTable() : stru
 }
 
 template<typename K, typename T>
-inline ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findTableItems(const K& key)
+inline List<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findAll(const K& key)
 {
     auto results = new ArrayList<TableItem<K, T>*>();
     bool found;
@@ -68,17 +75,20 @@ inline ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findTabl
 
         int indexOfPossibleKeys = indexOfFirstFoundKey;
         ++indexOfPossibleKeys;
-        foundItem = this->list_->at(indexOfPossibleKeys);
-        while (foundItem->getKey() == key)
+        if (this->list_->size() > indexOfPossibleKeys)
         {
-            results->add(foundItem);
-            ++indexOfPossibleKeys;
-            if (this->list_->size() > indexOfPossibleKeys)
+            foundItem = this->list_->at(indexOfPossibleKeys);
+            while (foundItem->getKey() == key)
             {
-                foundItem = this->list_->at(indexOfPossibleKeys);
-            } else
-            {
-                break;
+                results->add(foundItem);
+                ++indexOfPossibleKeys;
+                if (this->list_->size() > indexOfPossibleKeys)
+                {
+                    foundItem = this->list_->at(indexOfPossibleKeys);
+                } else
+                {
+                    break;
+                }
             }
         }
         indexOfPossibleKeys = --indexOfFirstFoundKey;
@@ -105,6 +115,14 @@ inline ArrayList<TableItem<K, T>*>* DuplicitySortedSequenceTable<K, T>::findTabl
     return nullptr;
 }
 
+template<typename K, typename T>
+DuplicitySortedSequenceTable<K, T>::~DuplicitySortedSequenceTable()
+{
+    for (int i = 0; i < this->list_->size(); ++i)
+    {
+        delete this->list_->at(i)->accessData();
+    }
+}
 
 
 #endif //SZATHMARY_SEMESTRALNA_PRACA_DUPLICITYSORTEDSEQUENCETABLE_H

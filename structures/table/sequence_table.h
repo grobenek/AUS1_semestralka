@@ -5,6 +5,12 @@
 #include <stdexcept>
 #include <string>
 
+
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 namespace structures
 {
 
@@ -84,7 +90,7 @@ namespace structures
 		/// <summary>
 		SequenceTable<K, T>& assignSequenceTable(SequenceTable<K, T>& other);
 
-	protected:
+    public:
 		List<TableItem<K, T>*>* list_;
 	};
 
@@ -113,7 +119,7 @@ namespace structures
 		}
 		else
 		{
-			throw std::out_of_range("Key not found in SequenceTable! Key:");
+			throw std::out_of_range("Key not found in SequenceTable! Key: " + key);
 		}
 	}
 
