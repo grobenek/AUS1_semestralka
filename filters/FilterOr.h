@@ -34,10 +34,14 @@ public:
         }
         return false;
     }
-
-private:
+public:
     List<UzemnaJednotka*>* passStructure(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& structure) override
     {
+        if (this->filters->isEmpty())
+        {
+            return nullptr;
+        }
+
         auto* results = new ArrayListWithObject<UzemnaJednotka*>();
 
         bool passed = true;
@@ -46,7 +50,7 @@ private:
             passed = this->passItem(item->accessData());
             if (passed)
             {
-                results->add(item->accessData());
+                results->add(item->accessData()->clone());
             }
         }
         if (results->size() == 0)

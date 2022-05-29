@@ -14,6 +14,7 @@ std::string CriteriumNazov::evaluate(UzemnaJednotka* const& object)
 {
     if (object != nullptr)
     {
+        this->result = object->getOfficialTitle();
         return object->getOfficialTitle();
     }
     throw std::invalid_argument("nullpointer in CriteriumNazov.evaluate!");

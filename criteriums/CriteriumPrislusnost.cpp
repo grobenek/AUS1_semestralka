@@ -15,6 +15,7 @@ std::string CriteriumPrislusnost::evaluate(UzemnaJednotka* const& object)
 {
     if (object != nullptr)
     {
+        this->result = object->getVyssiUzemnyCelok()->getOfficialTitle();
         return object->getVyssiUzemnyCelok()->getOfficialTitle(); //TODO prerobit - zisti na izbe
     }
     throw std::invalid_argument("NullPointer in CriteriumPrislusnost.evaluate!");

@@ -25,7 +25,7 @@ public:
     {
         if (filter != nullptr)
         {
-            this->filters.add(filter);
+            this->filters->add(filter);
         } else
         {
             throw std::invalid_argument("nullPointer in CompositeFilter.registerFilter");
@@ -42,6 +42,11 @@ public:
     virtual ~CompositeFilter()
     {
         delete this->filters;
+    }
+
+    size_t getSizeOfFilters()
+    {
+        return this->filters->size();
     }
 
 };

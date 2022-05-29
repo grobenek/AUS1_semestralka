@@ -16,15 +16,17 @@
 template<typename ObjectType, typename ValueType, typename StructureType>
 class FilterWithCriterium : public Filter<ObjectType, StructureType>
 {
-private:
+protected:
     Criterium<ObjectType, ValueType>* criterium;
 
 public:
     explicit FilterWithCriterium(Criterium<ObjectType, ValueType>* criteriumToEvaluate);
 
-    ~FilterWithCriterium();
+    virtual ~FilterWithCriterium();
 
     structures::List<ObjectType>* passStructure(StructureType& structure);
+
+    Criterium<ObjectType, ValueType>* getCriterium() const;
 
 protected:
     virtual bool passFilter(ValueType value) = 0;
@@ -57,6 +59,12 @@ structures::List<ObjectType>* FilterWithCriterium<ObjectType, ValueType, Structu
 {
     auto* result = this->passFilterStructure(structure);
     return result;
+}
+
+template<typename ObjectType, typename ValueType, typename StructureType>
+Criterium<ObjectType, ValueType>* FilterWithCriterium<ObjectType, ValueType, StructureType>::getCriterium() const
+{
+    return criterium;
 }
 
 

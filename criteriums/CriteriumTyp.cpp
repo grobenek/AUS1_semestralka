@@ -10,6 +10,7 @@
 
 UzemnaJednotkaTyp CriteriumTyp::evaluate(UzemnaJednotka* const& object)
 {
+    this->result = object->getTyp();
     return object->getTyp();
 }
 

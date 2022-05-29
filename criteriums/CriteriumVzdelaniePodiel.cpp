@@ -23,7 +23,7 @@ CriteriumVzdelaniePodiel::evaluate(UzemnaJednotka* const& object)
 
         double result = (1.0 * object->getVzdelanieUtriedene()->at(vzdelanieTyp) / object->getPocetObyvatelov()) *
                         100;
-        //TODO vypis
+        this->result = result;
         return result;
     }
     throw std::invalid_argument("nullpointer in criteriumVzdelaniePodiel.evaluate!");

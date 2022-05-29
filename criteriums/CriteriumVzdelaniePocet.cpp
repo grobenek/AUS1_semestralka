@@ -20,6 +20,7 @@ CriteriumVzdelaniePocet::evaluate(UzemnaJednotka* const& object)
         {
             return -1;
         }
+        this->result = object->getVzdelanieUtriedene()->at(vzdelanieTyp);
         int result = object->getVzdelanieUtriedene()->at(vzdelanieTyp);
 
         return result;

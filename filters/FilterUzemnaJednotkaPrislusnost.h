@@ -1,3 +1,8 @@
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //
 // Created by Peter Szathmáry on 25/05/2022.
 //
@@ -13,10 +18,6 @@
 #include "FilterEquals.h"
 #include "../structures/list/ArrayListWithObject.h"
 #include "../criteriums/CriteriumPrislusnost.h"
-
-// This is a personal academic project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 
 class FilterUzemnaJednotkaPrislusnost
 : public FilterEquals<UzemnaJednotka*, std::string, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>

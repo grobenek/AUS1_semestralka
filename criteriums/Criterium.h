@@ -10,8 +10,15 @@
 template<typename ObjectType, typename ResultType>
 class Criterium
 {
+protected:
+    ResultType result;
 public:
     virtual ResultType evaluate(const ObjectType& object) = 0;
+
+    ResultType getResult() const
+    {
+        return result;
+    }
 };
 
 

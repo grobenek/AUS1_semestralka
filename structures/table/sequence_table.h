@@ -90,7 +90,7 @@ namespace structures
 		/// <summary>
 		SequenceTable<K, T>& assignSequenceTable(SequenceTable<K, T>& other);
 
-    public:
+    protected:
 		List<TableItem<K, T>*>* list_;
 	};
 

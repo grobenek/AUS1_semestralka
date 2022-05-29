@@ -26,12 +26,16 @@ public:
     static VzdelanieTyp getTypVzdelanie(int choice);
     static void printFilterMaxValue();
     static void printFiltersChoiceKind();
+    static void printUzemnaJednotkaTyp();
     static void printFiltersChoices();
+    static void printUseFilterChoice();
+    static UzemnaJednotkaTyp getUzemnaJednotkaTyp(int choice);
     static void printInputName();
     static void newLine();
 
-    static void printResultChoicesTitles(structures::List<UzemnaJednotka*>& listToPrint);
-    static void printResultChoicestitlesTableItem(structures::List<structures::TableItem<std::string, UzemnaJednotka *> *>& listToprint);
+    static void printResultChoicesTitles(structures::List<UzemnaJednotka*>& listToPrint, bool filterVzdelaniePocetUsed,
+                                         bool filterVzdelaniePodielUsed);
+    static void printResultChoicestitlesTableItem(structures::List<structures::TableItem<std::string, UzemnaJednotka *> *>& listToPrint);
 };
 
 void ConsoleOutput::printGeneralChoices()
@@ -73,18 +77,35 @@ void ConsoleOutput::newLine()
     std::cout << std::endl;
 }
 
-void ConsoleOutput::printResultChoicesTitles(structures::List<UzemnaJednotka*>& listToPrint)
+void
+ConsoleOutput::printResultChoicesTitles(structures::List<UzemnaJednotka*>& listToPrint, bool filterVzdelaniePocetUsed,
+                                        bool filterVzdelaniePodielUsed)
 {
-    for (auto item: listToPrint)
-    {
-        std::cout << item->getOfficialTitle() << std::endl;
+        for (auto item: listToPrint)
+        {
+            UzemnaJednotkaTyp typJednotky = item->getTyp();
+
+            switch (typJednotky)
+            {
+                case OBEC:
+                    std::cout << "Nazov obce: " << item->getOfficialTitle() << " - " << "okres: " << item->getVyssiUzemnyCelok()->getOfficialTitle() << " - " << "kraj: " << item->getVyssiUzemnyCelok()->getVyssiUzemnyCelok()->getOfficialTitle() << std::endl;
+                    break;
+                case KRAJ:
+                    std::cout << "Nazov kraja: " << item->getOfficialTitle() << std::endl;
+                    break;
+                case OKRES:
+                    std::cout << "Nazov okresu: " << item->getOfficialTitle() << " - " << "kraj: " << item->getVyssiUzemnyCelok()->getOfficialTitle() << std::endl;
+                    break;
+                case NEZARADENA:
+                    break;
+            }
     }
 }
 
 void ConsoleOutput::printResultChoicestitlesTableItem(
-        structures::List<structures::TableItem<std::string, UzemnaJednotka*>*>& listToprint)
+        structures::List<structures::TableItem<std::string, UzemnaJednotka*>*>& listToPrint)
 {
-    for (auto item: listToprint)
+    for (auto item: listToPrint)
     {
         UzemnaJednotkaTyp typJednotky = item->accessData()->getTyp();
 
@@ -158,6 +179,7 @@ std::string ConsoleOutput::readChoiceRow()
 
 void ConsoleOutput::printFiltersChoices()
 {
+    std::cout << "Zadaj cislo filtra, ktory chces pridat" << std::endl;
     std::cout << "------------------------------------" << std::endl;
     std::cout << "1. FilterVzdelaniePocet" << std::endl;
     std::cout << "2. FilterVzdelaniePodiel" << std::endl;
@@ -204,26 +226,59 @@ VzdelanieTyp ConsoleOutput::getTypVzdelanie(int choice)
 {
     switch (choice)
     {
-        case 0:
-            return BEZ_UKONCENEHO_DO_14;
         case 1:
-            return ZAKLADNE;
+            return BEZ_UKONCENEHO_DO_14;
         case 2:
-            return UCNOVSKE;
+            return ZAKLADNE;
         case 3:
-            return STREDNE;
+            return UCNOVSKE;
         case 4:
-            return VYSSIE;
+            return STREDNE;
         case 5:
-            return VYSOKOSKOLSKE;
+            return VYSSIE;
         case 6:
-            return BEZ_VZDELANIE_OD_15;
+            return VYSOKOSKOLSKE;
         case 7:
+            return BEZ_VZDELANIE_OD_15;
+        case 8:
             return NEZISTENE;
         default:
             throw std::invalid_argument("Invalid argument in ConsoleOutput::getTypVzdelanie");
-            break;
+    }
 }
+
+void ConsoleOutput::printUzemnaJednotkaTyp()
+{
+    std::cout << "------------------------------------" << std::endl;
+    std::cout << "1. Obec" << std::endl;
+    std::cout << "2. Okres" << std::endl;
+    std::cout << "3. Kraj" << std::endl;
+    std::cout << "------------------------------------" << std::endl;
+}
+
+UzemnaJednotkaTyp ConsoleOutput::getUzemnaJednotkaTyp(int choice)
+{
+    switch (choice)
+    {
+        case 1:
+            return OBEC;
+        case 2:
+            return OKRES;
+        case 3:
+            return KRAJ;
+        default:
+            throw std::invalid_argument("Invalid argument in ConsoleOutput::getUzemnaJednotkaTyp");
+    }
+}
+
+void ConsoleOutput::printUseFilterChoice()
+{
+    std::cout << "Prajes si pouzit filtrovanie pred triedenim?" << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
+    std::cout << "1. Ano" << std::endl;
+    std::cout << "2. Nie" << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
+};
 
 
 #endif //SZATHMARY_SEMESTRALNA_PRACA_CONSOLEOUTPUT_H

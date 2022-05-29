@@ -218,6 +218,7 @@ void spustiSa()
             }
             case 2:
             {
+                //filtrovanie
                 ConsoleOutput::printFiltersChoiceKind();
                 std::string choiceOfFilterKind = ConsoleOutput::readChoiceWord();
 
@@ -230,8 +231,8 @@ void spustiSa()
                     std::cout << "Pozor, musis zadat cislo!" << std::endl;
                     break;
                 }
-                CompositeFilter<UzemnaJednotka*, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>* filter;
-                switch (choiceOfFiltersKindInt)
+                CompositeFilter<UzemnaJednotka*, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>* filter = nullptr;
+                switch (choiceOfFiltersKindInt)    // vyberam vhodny typ filtra
                 {
                     case 1:
                     {
@@ -249,124 +250,271 @@ void spustiSa()
                         break;
                     }
                 }
-                ConsoleOutput::printFiltersChoices();
-                std::string choiceOfFilters = ConsoleOutput::readChoiceWord();
+                if (filter == nullptr)
+                {
+                    delete obce;
+                    delete obceKody;
+                    delete kraje;
+                    delete okresyKody;
+                    delete krajeKody;
+                    delete okresy;
+                    return;
+                }
+                std::string choiceOfFilters;
+                do
+                {
+                    ConsoleOutput::printFiltersChoices();
+                    choiceOfFilters = ConsoleOutput::readChoiceWord();
 
-                int choiceOfFiltersInt;
+                    int choiceOfFiltersInt;
+                    try
+                    {
+                        choiceOfFiltersInt =  std::stoi(choiceOfFilters);
+                    } catch (std::invalid_argument& exception)
+                    {
+                        std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                        continue;
+                    }
+
+                    switch (choiceOfFiltersInt)
+                    {
+                        case 1:
+                        {
+                            ConsoleOutput::printFilterMinValue();
+                            std::string minValue = ConsoleOutput::readChoiceWord();
+                            ConsoleOutput::printFilterMaxValue();
+                            std::string maxValue = ConsoleOutput::readChoiceWord();
+
+                            int minValueInt;
+                            try
+                            {
+                                minValueInt =  std::stoi(minValue);
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+
+                            int maxValueInt;
+                            try
+                            {
+                                maxValueInt =  std::stoi(maxValue);
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+
+                            ConsoleOutput::printTypVzdelania();
+                            std::string typVzdelanie = ConsoleOutput::readChoiceWord();
+
+                            int typVzdelanieInt;
+                            try
+                            {
+                                typVzdelanieInt = std::stoi(typVzdelanie);
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+
+                            try
+                            {
+                                filter->registerFilter(new FilterVzdelaniePocet(minValueInt, maxValueInt, ConsoleOutput::getTypVzdelanie(typVzdelanieInt)));
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+                            break;
+                        }
+                        case 2:
+                        {
+                            ConsoleOutput::printFilterMinValue();
+                            std::string minValue = ConsoleOutput::readChoiceWord();
+                            ConsoleOutput::printFilterMaxValue();
+                            std::string maxValue = ConsoleOutput::readChoiceWord();
+
+                            double minValueDouble;
+                            try
+                            {
+                                minValueDouble =  std::stoi(minValue);
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+
+                            double maxValueDouble;
+                            try
+                            {
+                                maxValueDouble =  std::stoi(maxValue);
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+
+                            ConsoleOutput::printTypVzdelania();
+                            std::string typVzdelanie = ConsoleOutput::readChoiceWord();
+
+                            int typVzdelanieInt;
+                            try
+                            {
+                                typVzdelanieInt = std::stoi(typVzdelanie);
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+
+                            try
+                            {
+                                filter->registerFilter(new FilterVzdelaniePodiel(minValueDouble, maxValueDouble, ConsoleOutput::getTypVzdelanie(typVzdelanieInt)));
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+                            break;
+                        }
+                        case 3:
+                        {
+                            std::cout << "Nazov vyssej uzemnej jednotky: ";
+                            std::string nazovUzemnejJednotky = ConsoleOutput::readChoiceRow();
+
+                            filter->registerFilter(new FilterUzemnaJednotkaPrislusnost(nazovUzemnejJednotky));
+                            break;
+                        }
+                        case 4:
+                        {
+                            ConsoleOutput::printUzemnaJednotkaTyp();
+                            std::string typUzemnejJednotkyChoice = ConsoleOutput::readChoiceRow();
+
+                            int typUzemnejJednotkyInt;
+                            try
+                            {
+                                typUzemnejJednotkyInt = std::stoi(typUzemnejJednotkyChoice);
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+
+                            try
+                            {
+                                filter->registerFilter(new FilterUzemnaJednotkaTyp(ConsoleOutput::getUzemnaJednotkaTyp(typUzemnejJednotkyInt)));
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Zle zadana moznost!" << std::endl;
+                                break;
+                            }
+                            break;
+                        }
+                        case 0:
+                        {
+                            if (filter->getSizeOfFilters() != 0 && filter != nullptr)
+                            {
+
+                                ConsoleOutput::printUzemnaJednotkaTyp();
+                                std::string typUzemnejJednotkyChoice = ConsoleOutput::readChoiceRow();
+
+                                int typUzemnejJednotkyInt;
+                                try
+                                {
+                                    typUzemnejJednotkyInt = std::stoi(typUzemnejJednotkyChoice);
+                                } catch (std::invalid_argument& exception)
+                                {
+                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                    break;
+                                }
+                                List<UzemnaJednotka*>* result = nullptr;
+                                switch (typUzemnejJednotkyInt)
+                                {
+                                    case 1:
+                                    {
+                                        result = filter->passStructure(*obce);
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        result = filter->passStructure(*okresy);
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        result = filter->passStructure(*kraje);
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        delete filter;
+                                        filter = nullptr;
+                                        std::cout << "Zle zadana moznost!" << std::endl;
+                                        continue;
+                                    }
+                                }
+
+//                                auto* result = filter->passStructure(*obce); //TODO spravit vypisy criterii
+                                if (result == nullptr)
+                                {
+                                    std::cout << "Ziadne najdene zhody!" << std::endl;
+                                    break;
+                                }
+                                ConsoleOutput::printResultChoicesTitles(*result, false, false);
+                                delete result;
+                                delete filter;
+                                filter = nullptr;
+                            }
+                            delete filter; //TODO leaky v CompositeFilter, vola sa konstruktor abstraktnej triedy
+                            filter = nullptr;
+                            break;
+                        }
+                        default:
+                        {
+                            std::cout << "Zle zadana moznost!" << std::endl;
+                            continue;
+                        }
+                    }
+                } while (choiceOfFilters != "0");
+
+                break;
+            }
+            case 3:
+            {
+                //TODO triedenie
+                ConsoleOutput::printUseFilterChoice();
+                std::string choiceUseFilter = ConsoleOutput::readChoiceWord();
+
+                int choiceUseFilterInt;
                 try
                 {
-                    choiceOfFiltersInt =  std::stoi(choiceOfFilters);
+                    choiceUseFilterInt = std::stoi(choiceUseFilter);
                 } catch (std::invalid_argument& exception)
                 {
                     std::cout << "Pozor, musis zadat cislo!" << std::endl;
                     break;
                 }
-
-                switch (choiceOfFiltersInt)
+                switch (choiceUseFilterInt)
                 {
                     case 1:
                     {
-                        ConsoleOutput::printFilterMinValue();
-                        std::string minValue = ConsoleOutput::readChoiceWord();
-                        ConsoleOutput::printFilterMaxValue();
-                        std::string maxValue = ConsoleOutput::readChoiceWord();
+                        //nacitanie a pouzitie filtrov
 
-                        int minValueInt;
-                        try
-                        {
-                            minValueInt =  std::stoi(minValue);
-                        } catch (std::invalid_argument& exception)
-                        {
-                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
-                            break;
-                        }
-
-                        int maxValueInt;
-                        try
-                        {
-                            maxValueInt =  std::stoi(maxValue);
-                        } catch (std::invalid_argument& exception)
-                        {
-                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
-                            break;
-                        }
-
-                        ConsoleOutput::printTypVzdelania();
-                        std::string typVzdelanie = ConsoleOutput::readChoiceWord();
-
-                        int typVzdelanieInt;
-                        try
-                        {
-                         typVzdelanieInt = std::stoi(typVzdelanie);
-                        } catch (std::invalid_argument& exception)
-                        {
-                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
-                            break;
-                        }
-
-                        filter->registerFilter(new FilterVzdelaniePocet(minValueInt, maxValueInt, ConsoleOutput::getTypVzdelanie(typVzdelanieInt));
                         break;
                     }
                     case 2:
                     {
-                        ConsoleOutput::printFilterMinValue();
-                        std::string minValue = ConsoleOutput::readChoiceWord();
-                        ConsoleOutput::printFilterMaxValue();
-                        std::string maxValue = ConsoleOutput::readChoiceWord();
-
-                        double minValueDouble;
-                        try
-                        {
-                            minValueDouble =  std::stoi(minValue);
-                        } catch (std::invalid_argument& exception)
-                        {
-                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
-                            break;
-                        }
-
-                        double maxValueDouble;
-                        try
-                        {
-                            maxValueDouble =  std::stoi(maxValue);
-                        } catch (std::invalid_argument& exception)
-                        {
-                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
-                            break;
-                        }
-
-                        ConsoleOutput::printTypVzdelania();
-                        std::string typVzdelanie = ConsoleOutput::readChoiceWord();
-
-                        int typVzdelanieInt;
-                        try
-                        {
-                            typVzdelanieInt = std::stoi(typVzdelanie);
-                        } catch (std::invalid_argument& exception)
-                        {
-                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
-                            break;
-                        }
-
-                        filter->registerFilter(new FilterVzdelaniePodiel(minValueDouble, maxValueDouble, ConsoleOutput::getTypVzdelanie(typVzdelanieInt));
-                        break;
-                        break;
-                    }
-                    case 3:
-                    {
-                        break;
-                    }
-                    case 4:
-                    {
                         break;
                     }
                     default:
-                    {
                         std::cout << "Zle zadana moznost!" << std::endl;
                         break;
-                    }
                 }
-                
+                //rozhodnutie o aku uzemnu jednotku sa jedna
+
                 break;
+                //TODO koniec case 3
             }
             case 9:
                 run = false;
