@@ -22,6 +22,11 @@ Okres::Okres(const std::string& code, const std::string& officialTitle, const st
 UzemnaJednotka* Okres::clone()
 {
     auto* clone = new Okres(this->code, this->officialTitle, this->mediumTitle, this->shortTitle, this->note);
+    if (this->vekUtriedene != nullptr && this->vzdelanieUtriedene != nullptr && this->pocetObyvatelov != 0)
+    {
+        clone->setVekUtriedene(new structures::Array<int>(*this->vekUtriedene));
+        clone->setVzdelanieUtriedene(new structures::Array<int>(*this->getVzdelanieUtriedene()));
+    }
     clone->setVyssiUzemnyCelok(this->getVyssiUzemnyCelok());
     return clone;
 }

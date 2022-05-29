@@ -22,6 +22,11 @@ Kraj::Kraj(const std::string& code, const std::string& officialTitle, const std:
 UzemnaJednotka* Kraj::clone()
 {
     auto* clone = new Kraj(this->code, this->officialTitle, this->mediumTitle, this->shortTitle, this->note);
+    if (this->vekUtriedene != nullptr && !this->vekUtriedene->isEmpty() && this->pocetObyvatelov != 0)
+    {
+        clone->setVekUtriedene(new structures::Array<int>(*this->vekUtriedene));
+        clone->setVzdelanieUtriedene(new structures::Array<int>(*this->getVzdelanieUtriedene()));
+    }
     clone->setVyssiUzemnyCelok(this->getVyssiUzemnyCelok());
     return clone;
 }

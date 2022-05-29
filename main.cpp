@@ -13,6 +13,7 @@
 #include "filters/CompositeFilter.h"
 #include "filters/FilterAnd.h"
 #include "filters/FilterOr.h"
+#include "filters/FilterAll.h"
 
 // This is a personal academic project. Dear PVS-Studio, please check it.
 
@@ -461,7 +462,7 @@ void spustiSa()
                                     std::cout << "Ziadne najdene zhody!" << std::endl;
                                     break;
                                 }
-                                ConsoleOutput::printResultChoicesTitles(*result, false, false);
+                                ConsoleOutput::printResultChoicesTitles(*result);
                                 delete result;
                                 delete filter;
                                 filter = nullptr;
@@ -499,12 +500,1064 @@ void spustiSa()
                 {
                     case 1:
                     {
+                        List<UzemnaJednotka*>* result = nullptr;
                         //nacitanie a pouzitie filtrov
+                        {
+                            //filtrovanie
+                            ConsoleOutput::printFiltersChoiceKind();
+                            std::string choiceOfFilterKind = ConsoleOutput::readChoiceWord();
 
+                            int choiceOfFiltersKindInt;
+                            try
+                            {
+                                choiceOfFiltersKindInt = std::stoi(choiceOfFilterKind);
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+                            CompositeFilter<UzemnaJednotka*, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>* filter = nullptr;
+                            switch (choiceOfFiltersKindInt)    // vyberam vhodny typ filtra
+                            {
+                                case 1:
+                                {
+                                    filter = new FilterAnd();
+                                    break;
+                                }
+                                case 2:
+                                {
+                                    filter = new FilterOr();
+                                    break;
+                                }
+                                default:
+                                {
+                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                    break;
+                                }
+                            }
+                            if (filter == nullptr)
+                            {
+                                delete obce;
+                                delete obceKody;
+                                delete kraje;
+                                delete okresyKody;
+                                delete krajeKody;
+                                delete okresy;
+                                return;
+                            }
+                            std::string choiceOfFilters;
+                            do
+                            {
+                                ConsoleOutput::printFiltersChoices();
+                                choiceOfFilters = ConsoleOutput::readChoiceWord();
+
+                                int choiceOfFiltersInt;
+                                try
+                                {
+                                    choiceOfFiltersInt = std::stoi(choiceOfFilters);
+                                } catch (std::invalid_argument& exception)
+                                {
+                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                    continue;
+                                }
+
+                                switch (choiceOfFiltersInt)
+                                {
+                                    case 1:
+                                    {
+                                        ConsoleOutput::printFilterMinValue();
+                                        std::string minValue = ConsoleOutput::readChoiceWord();
+                                        ConsoleOutput::printFilterMaxValue();
+                                        std::string maxValue = ConsoleOutput::readChoiceWord();
+
+                                        int minValueInt;
+                                        try
+                                        {
+                                            minValueInt = std::stoi(minValue);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        int maxValueInt;
+                                        try
+                                        {
+                                            maxValueInt = std::stoi(maxValue);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        ConsoleOutput::printTypVzdelania();
+                                        std::string typVzdelanie = ConsoleOutput::readChoiceWord();
+
+                                        int typVzdelanieInt;
+                                        try
+                                        {
+                                            typVzdelanieInt = std::stoi(typVzdelanie);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        try
+                                        {
+                                            filter->registerFilter(new FilterVzdelaniePocet(minValueInt, maxValueInt,
+                                                                                            ConsoleOutput::getTypVzdelanie(
+                                                                                                    typVzdelanieInt)));
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        ConsoleOutput::printFilterMinValue();
+                                        std::string minValue = ConsoleOutput::readChoiceWord();
+                                        ConsoleOutput::printFilterMaxValue();
+                                        std::string maxValue = ConsoleOutput::readChoiceWord();
+
+                                        double minValueDouble;
+                                        try
+                                        {
+                                            minValueDouble = std::stoi(minValue);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        double maxValueDouble;
+                                        try
+                                        {
+                                            maxValueDouble = std::stoi(maxValue);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        ConsoleOutput::printTypVzdelania();
+                                        std::string typVzdelanie = ConsoleOutput::readChoiceWord();
+
+                                        int typVzdelanieInt;
+                                        try
+                                        {
+                                            typVzdelanieInt = std::stoi(typVzdelanie);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        try
+                                        {
+                                            filter->registerFilter(
+                                                    new FilterVzdelaniePodiel(minValueDouble, maxValueDouble,
+                                                                              ConsoleOutput::getTypVzdelanie(
+                                                                                      typVzdelanieInt)));
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        std::cout << "Nazov vyssej uzemnej jednotky: ";
+                                        std::string nazovUzemnejJednotky = ConsoleOutput::readChoiceRow();
+
+                                        filter->registerFilter(
+                                                new FilterUzemnaJednotkaPrislusnost(nazovUzemnejJednotky));
+                                        break;
+                                    }
+                                    case 4:
+                                    {
+                                        ConsoleOutput::printUzemnaJednotkaTyp();
+                                        std::string typUzemnejJednotkyChoice = ConsoleOutput::readChoiceRow();
+
+                                        int typUzemnejJednotkyInt;
+                                        try
+                                        {
+                                            typUzemnejJednotkyInt = std::stoi(typUzemnejJednotkyChoice);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        try
+                                        {
+                                            filter->registerFilter(new FilterUzemnaJednotkaTyp(
+                                                    ConsoleOutput::getUzemnaJednotkaTyp(typUzemnejJednotkyInt)));
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Zle zadana moznost!" << std::endl;
+                                            break;
+                                        }
+                                        break;
+                                    }
+                                    case 0:
+                                    {
+                                        if (filter->getSizeOfFilters() != 0 && filter != nullptr)
+                                        {
+
+                                            ConsoleOutput::printUzemnaJednotkaTyp();
+                                            std::string typUzemnejJednotkyChoice = ConsoleOutput::readChoiceRow();
+
+                                            int typUzemnejJednotkyInt;
+                                            try
+                                            {
+                                                typUzemnejJednotkyInt = std::stoi(typUzemnejJednotkyChoice);
+                                            } catch (std::invalid_argument& exception)
+                                            {
+                                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                break;
+                                            }
+                                            //TODO reuslt
+                                            switch (typUzemnejJednotkyInt)
+                                            {
+                                                case 1:
+                                                {
+                                                    result = filter->passStructure(*obce);
+                                                    break;
+                                                }
+                                                case 2:
+                                                {
+                                                    result = filter->passStructure(*okresy);
+                                                    break;
+                                                }
+                                                case 3:
+                                                {
+                                                    result = filter->passStructure(*kraje);
+                                                    break;
+                                                }
+                                                default:
+                                                {
+                                                    delete filter;
+                                                    filter = nullptr;
+                                                    std::cout << "Zle zadana moznost!" << std::endl;
+                                                    continue;
+                                                }
+                                            }
+
+//                                auto* result = filter->passStructure(*obce); //TODO spravit vypisy criterii
+                                            if (result == nullptr)
+                                            {
+                                                std::cout << "Ziadne najdene zhody!" << std::endl;
+                                                break;
+                                            }
+                                            delete filter;
+                                            filter = nullptr;
+                                        }
+                                        delete filter; //TODO leaky v CompositeFilter, vola sa konstruktor abstraktnej triedy
+                                        filter = nullptr;
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        std::cout << "Zle zadana moznost!" << std::endl;
+                                        continue;
+                                    }
+                                }
+                            } while (choiceOfFilters != "0");
+                        }
+                        if (result != nullptr)
+                        {
+                         //TODO moznosti podla coho triedit
+                            ConsoleOutput::printTriedenieAko();
+                            std::string triedenieAko = ConsoleOutput::readChoiceWord();
+
+                            int triedenieAkoInt;
+                            try
+                            {
+                                triedenieAkoInt = std::stoi(triedenieAko);
+                            } catch (std::invalid_argument& exception)
+                            {
+                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                break;
+                            }
+
+                            switch (triedenieAkoInt)
+                            {
+                                case 1:
+                                {
+                                    //vzostupne
+                                    ConsoleOutput::printTriedenieCriteriumChoice();
+                                    std::string triedenieKriterium = ConsoleOutput::readChoiceWord();
+
+                                    int triedenieKriteriumInt;
+                                    try
+                                    {
+                                        triedenieKriteriumInt = std::stoi(triedenieKriterium);
+                                    } catch (std::invalid_argument& exception)
+                                    {
+                                        std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                        break;
+                                    }
+                                    switch (triedenieKriteriumInt)
+                                    {
+                                        case 1:
+                                        {
+                                            //vzostupne
+                                            auto* criterium = new CriteriumNazov();
+                                            ShellSort<std::string>::sort(*result, criterium, false);
+                                            delete criterium;
+                                            ConsoleOutput::printResultChoicesTitles(
+                                                    *result); //TODO vypisy treba spravit len pre dane kriteria!!
+                                            delete result;
+                                            break;
+                                        }
+                                        case 2:
+                                        {
+                                            ConsoleOutput::printTypVzdelania();
+                                            std::string typVzdelania = ConsoleOutput::readChoiceWord();
+
+                                            int typVzdelaniaInt;
+                                            try
+                                            {
+                                                typVzdelaniaInt = std::stoi(typVzdelania);
+                                            } catch (std::invalid_argument& exception)
+                                            {
+                                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                break;
+                                            }
+
+                                            auto* criterium = new CriteriumVzdelaniePocet(ConsoleOutput::getTypVzdelanie(typVzdelaniaInt));
+                                            ShellSort<int>::sort(*result, criterium, false);
+                                            delete criterium;
+                                            ConsoleOutput::printResultChoicesTitles(
+                                                    *result); //TODO vypisy treba spravit len pre dane kriteria!!
+                                            delete result;
+                                            break;
+                                        }
+                                        case 3:
+                                        {
+                                            ConsoleOutput::printTypVzdelania();
+                                            std::string typVzdelania = ConsoleOutput::readChoiceWord();
+
+                                            int typVzdelaniaInt;
+                                            try
+                                            {
+                                                typVzdelaniaInt = std::stoi(typVzdelania);
+                                            } catch (std::invalid_argument& exception)
+                                            {
+                                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                break;
+                                            }
+
+                                            auto* criterium = new CriteriumVzdelaniePodiel(ConsoleOutput::getTypVzdelanie(typVzdelaniaInt));
+                                            ShellSort<double>::sort(*result, criterium, false);
+                                            delete criterium;
+                                            ConsoleOutput::printResultChoicesTitles(
+                                                    *result); //TODO vypisy treba spravit len pre dane kriteria!!
+                                            delete result;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                                case 2:
+                                {
+                                    //zostupne
+                                    ConsoleOutput::printTriedenieCriteriumChoice();
+                                    std::string triedenieKriterium = ConsoleOutput::readChoiceWord();
+
+                                    int triedenieKriteriumInt;
+                                    try
+                                    {
+                                        triedenieKriteriumInt = std::stoi(triedenieKriterium);
+                                    } catch (std::invalid_argument& exception)
+                                    {
+                                        std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                        break;
+                                    }
+                                    switch (triedenieKriteriumInt)
+                                    {
+                                        case 1:
+                                        {
+                                            auto* criterium = new CriteriumNazov();
+                                            ShellSort<std::string>::sort(*result, criterium, true);
+                                            delete criterium;
+                                            ConsoleOutput::printResultChoicesTitles(
+                                                    *result); //TODO vypisy treba spravit len pre dane kriteria!!
+                                            delete result;
+                                            break;
+                                        }
+                                        case 2:
+                                        {
+                                            ConsoleOutput::printTypVzdelania();
+                                            std::string typVzdelania = ConsoleOutput::readChoiceWord();
+
+                                            int typVzdelaniaInt;
+                                            try
+                                            {
+                                                typVzdelaniaInt = std::stoi(typVzdelania);
+                                            } catch (std::invalid_argument& exception)
+                                            {
+                                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                break;
+                                            }
+
+                                            auto* criterium = new CriteriumVzdelaniePocet(ConsoleOutput::getTypVzdelanie(typVzdelaniaInt));
+                                            ShellSort<int>::sort(*result, criterium, true);
+                                            delete criterium;
+                                            ConsoleOutput::printResultChoicesTitles(
+                                                    *result); //TODO vypisy treba spravit len pre dane kriteria!!
+                                            delete result;
+                                            break;
+                                        }
+                                        case 3:
+                                        {
+                                            ConsoleOutput::printTypVzdelania();
+                                            std::string typVzdelania = ConsoleOutput::readChoiceWord();
+
+                                            int typVzdelaniaInt;
+                                            try
+                                            {
+                                                typVzdelaniaInt = std::stoi(typVzdelania);
+                                            } catch (std::invalid_argument& exception)
+                                            {
+                                                std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                break;
+                                            }
+
+                                            auto* criterium = new CriteriumVzdelaniePodiel(ConsoleOutput::getTypVzdelanie(typVzdelaniaInt));
+                                            ShellSort<double>::sort(*result, criterium, true);
+                                            delete criterium;
+                                            ConsoleOutput::printResultChoicesTitles(
+                                                    *result); //TODO vypisy treba spravit len pre dane kriteria!!
+                                            delete result;
+                                            break;
+                                        }
+                                    }
+                                    break;
+                                }
+                            }
+                        }
+
+                        //TODO koniec filtrov
                         break;
                     }
                     case 2:
                     {
+                        // ktory typ uzemnej jednotky?
+                        ConsoleOutput::printTriedenieAko();
+                        std::string triedenieAko = ConsoleOutput::readChoiceWord();
+
+                        int triedenieAkoInt;
+                        try
+                        {
+                            triedenieAkoInt = std::stoi(triedenieAko);
+                        } catch (std::invalid_argument& exception)
+                        {
+                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                            break;
+                        }
+
+                        switch (triedenieAkoInt)
+                        {
+                            case 1:
+                            {
+                                //vzostupne
+                                ConsoleOutput::printUzemnaJednotkaTyp();
+                                std::string triedenieUzemnaJednotkaTyp = ConsoleOutput::readChoiceWord();
+
+                                int triedenieUzemnaJednotkaTypInt;
+                                try
+                                {
+                                    triedenieUzemnaJednotkaTypInt = std::stoi(triedenieAko);
+                                } catch (std::invalid_argument& exception)
+                                {
+                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                    break;
+                                }
+
+                                switch (triedenieUzemnaJednotkaTypInt)
+                                {
+                                    case 1:
+                                    {
+                                        //obec
+                                        ConsoleOutput::printTriedenieCriteriumChoice();
+                                        std::string triedenieCriteriumChoice = ConsoleOutput::readChoiceWord();
+
+                                        int triedenieCriteriumChoiceInt;
+                                        try
+                                        {
+                                            triedenieCriteriumChoiceInt = std::stoi(triedenieCriteriumChoice);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        switch (triedenieCriteriumChoiceInt)
+                                        {
+                                            case 1:
+                                            {
+                                                //nazov
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*obce);
+                                                auto* criterium = new CriteriumNazov();
+                                                ShellSort<std::string>::sort(*result, criterium, false);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                //pocet
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*obce);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePocet(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<int>::sort(*result, criterium, false);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 3:
+                                            {
+                                                //podiel
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*obce);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePodiel(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<double>::sort(*result, criterium, false);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        //okres
+                                        ConsoleOutput::printTriedenieCriteriumChoice();
+                                        std::string triedenieCriteriumChoice = ConsoleOutput::readChoiceWord();
+
+                                        int triedenieCriteriumChoiceInt;
+                                        try
+                                        {
+                                            triedenieCriteriumChoiceInt = std::stoi(triedenieCriteriumChoice);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        switch (triedenieCriteriumChoiceInt)
+                                        {
+                                            case 1:
+                                            {
+                                                //nazov
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*okresy);
+                                                auto* criterium = new CriteriumNazov();
+                                                ShellSort<std::string>::sort(*result, criterium, false);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                //pocet
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*okresy);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePocet(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<int>::sort(*result, criterium, false);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 3:
+                                            {
+                                                //podiel
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*okresy);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePodiel(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<double>::sort(*result, criterium, false);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        //kraj
+                                        ConsoleOutput::printTriedenieCriteriumChoice();
+                                        std::string triedenieCriteriumChoice = ConsoleOutput::readChoiceWord();
+
+                                        int triedenieCriteriumChoiceInt;
+                                        try
+                                        {
+                                            triedenieCriteriumChoiceInt = std::stoi(triedenieCriteriumChoice);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        switch (triedenieCriteriumChoiceInt)
+                                        {
+                                            case 1:
+                                            {
+                                                //nazov
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*kraje);
+                                                auto* criterium = new CriteriumNazov();
+                                                ShellSort<std::string>::sort(*result, criterium, false);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                //pocet
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*kraje);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePocet(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<int>::sort(*result, criterium, false);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 3:
+                                            {
+                                                //podiel
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*kraje);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePodiel(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<double>::sort(*result, criterium, false);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                            case 2:
+                            {
+                                //zostupne
+                                ConsoleOutput::printUzemnaJednotkaTyp();
+                                std::string triedenieUzemnaJednotkaTyp = ConsoleOutput::readChoiceWord();
+
+                                int triedenieUzemnaJednotkaTypInt;
+                                try
+                                {
+                                    triedenieUzemnaJednotkaTypInt = std::stoi(triedenieAko);
+                                } catch (std::invalid_argument& exception)
+                                {
+                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                    break;
+                                }
+
+                                switch (triedenieUzemnaJednotkaTypInt)
+                                {
+                                    case 1:
+                                    {
+                                        //obec
+                                        ConsoleOutput::printTriedenieCriteriumChoice();
+                                        std::string triedenieCriteriumChoice = ConsoleOutput::readChoiceWord();
+
+                                        int triedenieCriteriumChoiceInt;
+                                        try
+                                        {
+                                            triedenieCriteriumChoiceInt = std::stoi(triedenieCriteriumChoice);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        switch (triedenieCriteriumChoiceInt)
+                                        {
+                                            case 1:
+                                            {
+                                                //nazov
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*obce);
+                                                auto* criterium = new CriteriumNazov();
+                                                ShellSort<std::string>::sort(*result, criterium, true);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                //pocet
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*obce);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePocet(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<int>::sort(*result, criterium, true);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 3:
+                                            {
+                                                //podiel
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*obce);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePodiel(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<double>::sort(*result, criterium, true);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        //okres
+                                        ConsoleOutput::printTriedenieCriteriumChoice();
+                                        std::string triedenieCriteriumChoice = ConsoleOutput::readChoiceWord();
+
+                                        int triedenieCriteriumChoiceInt;
+                                        try
+                                        {
+                                            triedenieCriteriumChoiceInt = std::stoi(triedenieCriteriumChoice);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        switch (triedenieCriteriumChoiceInt)
+                                        {
+                                            case 1:
+                                            {
+                                                //nazov
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*okresy);
+                                                auto* criterium = new CriteriumNazov();
+                                                ShellSort<std::string>::sort(*result, criterium, true);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                //pocet
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*okresy);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePocet(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<int>::sort(*result, criterium, true);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 3:
+                                            {
+                                                //podiel
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*okresy);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePodiel(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<double>::sort(*result, criterium, true);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        //kraj
+                                        ConsoleOutput::printTriedenieCriteriumChoice();
+                                        std::string triedenieCriteriumChoice = ConsoleOutput::readChoiceWord();
+
+                                        int triedenieCriteriumChoiceInt;
+                                        try
+                                        {
+                                            triedenieCriteriumChoiceInt = std::stoi(triedenieCriteriumChoice);
+                                        } catch (std::invalid_argument& exception)
+                                        {
+                                            std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                            break;
+                                        }
+
+                                        switch (triedenieCriteriumChoiceInt)
+                                        {
+                                            case 1:
+                                            {
+                                                //nazov
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*kraje);
+                                                auto* criterium = new CriteriumNazov();
+                                                ShellSort<std::string>::sort(*result, criterium, true);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 2:
+                                            {
+                                                //pocet
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*kraje);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePocet(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<int>::sort(*result, criterium, true);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                            }
+                                            case 3:
+                                            {
+                                                //podiel
+                                                auto* filter = new FilterAll();
+                                                auto* result = filter->passStructure(*kraje);
+
+                                                ConsoleOutput::printTypVzdelania();
+                                                std::string vzdelanieTypChoice = ConsoleOutput::readChoiceWord();
+
+                                                int vzdelanieTypChoiceInt;
+                                                try
+                                                {
+                                                    vzdelanieTypChoiceInt = std::stoi(vzdelanieTypChoice);
+                                                } catch (std::invalid_argument& exception)
+                                                {
+                                                    std::cout << "Pozor, musis zadat cislo!" << std::endl;
+                                                    break;
+                                                }
+
+                                                auto* criterium = new CriteriumVzdelaniePodiel(ConsoleOutput::getTypVzdelanie(vzdelanieTypChoiceInt));
+                                                ShellSort<double>::sort(*result, criterium, true);
+                                                ConsoleOutput::printResultChoicesTitles(*result);
+
+                                                delete filter;
+                                                delete result;
+                                                delete criterium;
+                                                break;
+                                                break;
+                                            }
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
                         break;
                     }
                     default:

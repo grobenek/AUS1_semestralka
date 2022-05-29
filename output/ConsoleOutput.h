@@ -23,6 +23,7 @@ public:
     static void printPointSeachChoices();
     static void printFilterMinValue();
     static void printTypVzdelania();
+    static void printTriedenieAko();
     static VzdelanieTyp getTypVzdelanie(int choice);
     static void printFilterMaxValue();
     static void printFiltersChoiceKind();
@@ -33,9 +34,10 @@ public:
     static void printInputName();
     static void newLine();
 
-    static void printResultChoicesTitles(structures::List<UzemnaJednotka*>& listToPrint, bool filterVzdelaniePocetUsed,
-                                         bool filterVzdelaniePodielUsed);
+    static void printResultChoicesTitles(structures::List<UzemnaJednotka*>& listToPrint);
     static void printResultChoicestitlesTableItem(structures::List<structures::TableItem<std::string, UzemnaJednotka *> *>& listToPrint);
+
+    static void printTriedenieCriteriumChoice();
 };
 
 void ConsoleOutput::printGeneralChoices()
@@ -78,27 +80,72 @@ void ConsoleOutput::newLine()
 }
 
 void
-ConsoleOutput::printResultChoicesTitles(structures::List<UzemnaJednotka*>& listToPrint, bool filterVzdelaniePocetUsed,
-                                        bool filterVzdelaniePodielUsed)
+ConsoleOutput::printResultChoicesTitles(structures::List<UzemnaJednotka*>& listToPrint)
 {
-        for (auto item: listToPrint)
-        {
-            UzemnaJednotkaTyp typJednotky = item->getTyp();
+    for (auto item: listToPrint)
+    {
+        UzemnaJednotkaTyp typJednotky = item->getTyp();
 
-            switch (typJednotky)
+        switch (typJednotky)
+        {
+
+            case OBEC:
+                std::cout << "Nazov obce: " << item->getOfficialTitle() << " - " << "okres: " << item->getVyssiUzemnyCelok()->getOfficialTitle() << " - " << "kraj: " << item->getVyssiUzemnyCelok()->getVyssiUzemnyCelok()->getOfficialTitle() << std::endl;
+                break;
+            case KRAJ:
+                std::cout << "Nazov kraja: " << item->getOfficialTitle() << std::endl;
+                break;
+            case OKRES:
+                std::cout << "Nazov okresu: " << item->getOfficialTitle() << " - " << "kraj: " << item->getVyssiUzemnyCelok()->getOfficialTitle() << std::endl;
+                break;
+            case NEZARADENA:
+                break;
+        }
+
+        std::cout << "Vzdelanie: " << std::endl;
+        int counter = 0;
+        if (item->getVzdelanieUtriedene() == nullptr)
+        {
+            std::cout << std::endl;
+            continue;
+        }
+        for (int i = 0; i < item->getVzdelanieUtriedene()->size(); ++i)
+        {
+            std::string vzdelanieTyp;
+            switch (counter)
             {
-                case OBEC:
-                    std::cout << "Nazov obce: " << item->getOfficialTitle() << " - " << "okres: " << item->getVyssiUzemnyCelok()->getOfficialTitle() << " - " << "kraj: " << item->getVyssiUzemnyCelok()->getVyssiUzemnyCelok()->getOfficialTitle() << std::endl;
+                case 0:
+                    vzdelanieTyp = "Bez ukonceneho do 14 rokov: ";
                     break;
-                case KRAJ:
-                    std::cout << "Nazov kraja: " << item->getOfficialTitle() << std::endl;
+                case 1:
+                    vzdelanieTyp = "Zakladne: ";
                     break;
-                case OKRES:
-                    std::cout << "Nazov okresu: " << item->getOfficialTitle() << " - " << "kraj: " << item->getVyssiUzemnyCelok()->getOfficialTitle() << std::endl;
+                case 2:
+                    vzdelanieTyp = "Ucnovske: ";
                     break;
-                case NEZARADENA:
+                case 3:
+                    vzdelanieTyp = "Stredne: ";
+                    break;
+                case 4:
+                    vzdelanieTyp = "Vyssie: ";
+                    break;
+                case 5:
+                    vzdelanieTyp = "Vysokoskolske: ";
+                    break;
+                case 6:
+                    vzdelanieTyp = "Bez vzdelania od 15 rokov: ";
+                    break;
+                case 7:
+                    vzdelanieTyp = "Nezistene: ";
+                    break;
+                default:
+                    vzdelanieTyp = "ERROR";
                     break;
             }
+            std::cout << vzdelanieTyp << item->getVzdelanieUtriedene()->at(i) << " obyvatelov" << std::endl;
+            counter++;
+        }
+        std::cout << std::endl;
     }
 }
 
@@ -127,6 +174,11 @@ void ConsoleOutput::printResultChoicestitlesTableItem(
 
         std::cout << "Vzdelanie: " << std::endl;
         int counter = 0;
+        if (item->accessData()->getVzdelanieUtriedene() == nullptr)
+        {
+            std::cout << std::endl;
+            continue;
+        }
         for (int i = 0; i < item->accessData()->getVzdelanieUtriedene()->size(); ++i)
         {
             std::string vzdelanieTyp;
@@ -278,7 +330,26 @@ void ConsoleOutput::printUseFilterChoice()
     std::cout << "1. Ano" << std::endl;
     std::cout << "2. Nie" << std::endl;
     std::cout << "----------------------------------------------" << std::endl;
-};
+}
+
+void ConsoleOutput::printTriedenieAko()
+{
+    std::cout << "Ako chces triedit?" << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
+    std::cout << "1. Vzostupne" << std::endl;
+    std::cout << "2. Zostupne" << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
+}
+
+void ConsoleOutput::printTriedenieCriteriumChoice()
+{
+    std::cout << "Podla akeho ktiteria chces triedit?" << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
+    std::cout << "1. Kriterium nazov" << std::endl;
+    std::cout << "2. Kriterium vzdelanie pocet" << std::endl;
+    std::cout << "3. KriteriumVzdelanie podiel" << std::endl;
+    std::cout << "----------------------------------------------" << std::endl;
+}
 
 
 #endif //SZATHMARY_SEMESTRALNA_PRACA_CONSOLEOUTPUT_H
