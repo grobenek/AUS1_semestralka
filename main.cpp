@@ -31,7 +31,7 @@ int main()
     // potom dat
     // pvs-studio-analyzer analyze
     // potom dat
-    // plog-converter -a GA:1,2 -t fullhtml -o report.tasks PVS-Studio.log
+    // plog-converter -a GA:1,2,3 -t fullhtml -o report.tasks PVS-Studio.log
 
     return 0;
 }
@@ -52,9 +52,6 @@ void spustiSa()
     DataLoader::nacitajVzdelanie("vzdelanie.csv", *obce, *obceKody);
 
     DataLoader::nacitajVek("vek.csv", *obce, *obceKody);
-
-
-    //TODO spravit prislusnost aj pre vyssie uzemne jednotky
 
     bool run = true;
     std::cout << "Vitaj v semestralnej aplikacii Petra szathmaryho!" << std::endl;

@@ -12,7 +12,6 @@
 
 
 #include "CriteriumUzemnaJednotka.h"
-#include "CriteriumString.h"
 
 class CriteriumPrislusnost : public Criterium<UzemnaJednotka*, bool>
 {

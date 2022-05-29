@@ -146,7 +146,8 @@ ConsoleOutput::printResultChoicesTitles(structures::List<UzemnaJednotka*>& listT
                     vzdelanieTyp = "ERROR";
                     break;
             }
-            std::cout << vzdelanieTyp << item->getVzdelanieUtriedene()->at(i) << " obyvatelov" << std::endl;
+            std::cout << vzdelanieTyp << item->getVzdelanieUtriedene()->at(i) << " obyvatelov" << " - " << "podiel = " << (1.0 * item->getVzdelanieUtriedene()->at(ConsoleOutput::getTypVzdelanie(counter + 1)) / item->getPocetObyvatelov()) *
+                                                                                                                          100 << "%" << std::endl;
             counter++;
         }
         std::cout << std::endl;
