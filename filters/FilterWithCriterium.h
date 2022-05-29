@@ -12,7 +12,6 @@
 
 #include "Filter.h"
 #include "../criteriums/Criterium.h"
-#include "../structures/list/linked_list.h"
 
 template<typename ObjectType, typename ValueType, typename StructureType>
 class FilterWithCriterium : public Filter<ObjectType, StructureType>
