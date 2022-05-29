@@ -352,7 +352,7 @@ void ConsoleOutput::printTriedenieCriteriumChoice()
     std::cout << "----------------------------------------------" << std::endl;
     std::cout << "1. Kriterium nazov" << std::endl;
     std::cout << "2. Kriterium vzdelanie pocet" << std::endl;
-    std::cout << "3. KriteriumVzdelanie podiel" << std::endl;
+    std::cout << "3. Kriterium vzdelanie podiel" << std::endl;
     std::cout << "----------------------------------------------" << std::endl;
 }
 
