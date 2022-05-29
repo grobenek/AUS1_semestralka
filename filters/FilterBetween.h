@@ -1,10 +1,11 @@
-//
-// Created by Peter Szathmáry on 17/05/2022.
-//
 
 // This is a personal academic project. Dear PVS-Studio, please check it.
 
 // PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
+//
+// Created by Peter Szathmáry on 17/05/2022.
+//
 
 #ifndef SZATHMARY_SEMESTRALNA_PRACA_FILTERBETWEEN_H
 #define SZATHMARY_SEMESTRALNA_PRACA_FILTERBETWEEN_H

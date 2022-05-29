@@ -1,3 +1,8 @@
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //
 // Created by Peter Szathmáry on 23/05/2022.
 //
@@ -5,10 +10,6 @@
 #include "Obec.h"
 
 #include <utility>
-
-// This is a personal academic project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 
 Obec::Obec(const std::string& code, const std::string& officialTitle,
            const std::string& mediumTitle, const std::string& shortTitle, const std::string& note,

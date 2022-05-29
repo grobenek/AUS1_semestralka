@@ -1,3 +1,8 @@
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //
 // Created by Peter Szathmáry on 17/05/2022.
 //
@@ -8,10 +13,6 @@
 #include "Filter.h"
 #include "../criteriums/Criterium.h"
 #include "../structures/list/linked_list.h"
-
-// This is a personal academic project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 
 template<typename ObjectType, typename ValueType, typename StructureType>
 class FilterWithCriterium : public Filter<ObjectType, StructureType>

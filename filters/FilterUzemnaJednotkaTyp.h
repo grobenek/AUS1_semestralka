@@ -1,3 +1,8 @@
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //
 // Created by Peter Szathmáry on 25/05/2022.
 //
@@ -36,8 +41,6 @@ protected:
     List<UzemnaJednotka*>*
     passFilterStructure(DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>& structure) override
     {
-        //TODO leaks v Listoch, nakolko nevedia pracovat s objektami - najdi solution
-        //TODO treba spravit dalsie filtre
         auto* result = new ArrayListWithObject<UzemnaJednotka*>();
 
         for (auto* item: structure)

@@ -1,6 +1,11 @@
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 #pragma once
 
 #include "../list/array_list.h"
+#include "../list/ArrayListWithObject.h"
 #include "sequence_table.h"
 
 

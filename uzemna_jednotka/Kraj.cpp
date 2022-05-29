@@ -1,12 +1,13 @@
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //
 // Created by Peter Szathmáry on 23/05/2022.
 //
 
 #include "Kraj.h"
-
-// This is a personal academic project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 
 Kraj::Kraj(const std::string& code, const std::string& officialTitle, const std::string& mediumTitle,
            const std::string& shortTitle, const std::string& note) : UzemnaJednotka(code, officialTitle, mediumTitle,

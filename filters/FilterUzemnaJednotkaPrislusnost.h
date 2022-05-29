@@ -20,15 +20,15 @@
 #include "../criteriums/CriteriumPrislusnost.h"
 
 class FilterUzemnaJednotkaPrislusnost
-: public FilterEquals<UzemnaJednotka*, std::string, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>
+: public FilterEquals<UzemnaJednotka*, bool, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>
 {
 public:
     explicit FilterUzemnaJednotkaPrislusnost(std::string nazovNadradenejUzemnejJednotky)
-    : FilterEquals(new CriteriumPrislusnost(), std::move(nazovNadradenejUzemnejJednotky))
+    : FilterEquals(new CriteriumPrislusnost(nazovNadradenejUzemnejJednotky), true)
     {}
 
 protected:
-    bool passFilter(std::string valueToEvaluate) override
+    bool passFilter(bool valueToEvaluate) override
     {
         return FilterEquals::passFilter(valueToEvaluate);
     }

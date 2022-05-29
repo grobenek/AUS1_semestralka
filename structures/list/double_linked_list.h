@@ -338,7 +338,6 @@ namespace structures
 
                 newItem->getPrevious()->setNext(newItem);
                 newItem->getNext()->setPrevious(newItem);
-                // TODO prerob nejak inac
             }
             size_++;
         }

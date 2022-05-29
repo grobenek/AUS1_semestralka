@@ -52,7 +52,7 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajO
 
             resultOfStringSplit = resultOfStringSplit.substr(3, 3); // ziskam cislo okresu z obce
 
-            Okres* najdenyOkres;
+            Okres* najdenyOkres = nullptr;
             auto* najdeneOkresy = okresy.findAll(okresyKody.find(resultOfStringSplit)->getOfficialTitle());
 
             for (auto item: *najdeneOkresy)
@@ -123,7 +123,7 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajK
     std::string word;
     int wordCounter = -1; // aby som vedel accessovat pole bez nejakych problemov
     auto* arrayListOfWords = new structures::Array<std::string>(5);
-    Kraj* novyKraj;
+    Kraj* novyKraj = nullptr;
 
     getline(read, word); // Precitam 1. riadok, kde su len vysvetlivky
 
@@ -194,8 +194,8 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajO
 
     std::string word;
     int wordCounter = -1;
-    auto* arrayListOfWords = new structures::Array<std::string>(5);
-    Okres* novyOkres;
+    auto* arrayOfWords = new structures::Array<std::string>(5);
+    Okres* novyOkres = nullptr;
 
     getline(read, word); // Precitam 1. riadok, kde su len vysvetlivky
 
@@ -203,8 +203,8 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajO
     {
         if (wordCounter == 5)
         {
-            novyOkres = new Okres(arrayListOfWords->at(0), arrayListOfWords->at(1), arrayListOfWords->at(2),
-                                  arrayListOfWords->at(3), arrayListOfWords->at(4));
+            novyOkres = new Okres(arrayOfWords->at(0), arrayOfWords->at(1), arrayOfWords->at(2),
+                                  arrayOfWords->at(3), arrayOfWords->at(4));
             auto* novyOkresClone = novyOkres->clone();
 
             std::string resultOfStringSplit = novyOkresClone->getCode();
@@ -248,12 +248,12 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajO
             wordCounter++;
             continue;
         }
-        arrayListOfWords->at(wordCounter) = word;
+        arrayOfWords->at(wordCounter) = word;
         wordCounter++;
     }
 
-    novyOkres = new Okres(arrayListOfWords->at(0), arrayListOfWords->at(1), arrayListOfWords->at(2),
-                          arrayListOfWords->at(3), arrayListOfWords->at(4));
+    novyOkres = new Okres(arrayOfWords->at(0), arrayOfWords->at(1), arrayOfWords->at(2),
+                          arrayOfWords->at(3), arrayOfWords->at(4));
     auto* novyOkresClone = novyOkres->clone();
 
     std::string resultOfStringSplit = novyOkresClone->getCode();
@@ -269,7 +269,7 @@ DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>* DataLoader::nacitajO
     okresy->insert(novyOkresClone->getOfficialTitle(), novyOkresClone);
     delete novyOkres;
 
-    delete arrayListOfWords;
+    delete arrayOfWords;
     return okresy;
 }
 
@@ -312,7 +312,7 @@ void DataLoader::nacitajVzdelanie(const std::string& fileName,
 
             auto nazovObceNaHladanie = obceKody.find(kodObce)->getOfficialTitle();
             auto* najdeneObce = obce.findAll(nazovObceNaHladanie);
-            Obec* najdenaObec;
+            Obec* najdenaObec = nullptr;
             for (auto item: *najdeneObce)
             {
                 if (item->accessData()->getCode() == kodObce)
@@ -379,7 +379,7 @@ DataLoader::nacitajVek(const std::string& fileName, DuplicitySortedSequenceTable
 
             auto nazovObceNaHladanie = obceKody.find(kodObce)->getOfficialTitle();
             auto* najdeneObce = obce.findAll(nazovObceNaHladanie);
-            Obec* najdenaObec;
+            Obec* najdenaObec = nullptr;
             for (auto item: *najdeneObce)
             {
                 if (item->accessData()->getCode() == kodObce)

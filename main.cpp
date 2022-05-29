@@ -1,3 +1,8 @@
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 #include <iostream>
 #include "structures/table/DuplicitySortedSequenceTable.h"
 #include "criteriums/CriteriumNazov.h"
@@ -14,10 +19,6 @@
 #include "filters/FilterAnd.h"
 #include "filters/FilterOr.h"
 #include "filters/FilterAll.h"
-
-// This is a personal academic project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 
 void spustiSa();
 
@@ -44,81 +45,16 @@ void spustiSa()
 
     auto* okresyKody = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
     auto* okresy = DataLoader::nacitajOkres("okresy.csv", *kraje, *krajeKody, *okresyKody);
-//    for (auto item: *okresy)
-//    {
-//        std::cout << item->accessData()->getOfficialTitle() << std::endl;
-//    }
 
     auto* obceKody = new DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>();
     auto* obce = DataLoader::nacitajObce("obce.csv", *okresy, *okresyKody, *obceKody);
-//    for (auto item: *obceKody)
-//    {
-//        std::cout << item->getKey() << std::endl;
-//    }
 
     DataLoader::nacitajVzdelanie("vzdelanie.csv", *obce, *obceKody);
-//    int pocitadlo = 0;
-//    for (auto item: *obce)
-//    {
-//        if (item->accessData()->getVzdelanieUtriedene() == nullptr)
-//        {
-//            std::cout << "Nenajdene vzdelanie pre obec : " << item->accessData()->getOfficialTitle() << std::endl;
-//            pocitadlo++;
-//            continue;
-//        }
-//        std::cout << "Vzdelanie pre obec :" << item->accessData()->getOfficialTitle() << std::endl;
-//        for (int i = 0; i < item->accessData()->getVzdelanieUtriedene()->size(); ++i)
-//        {
-//            std::cout << item->accessData()->getVzdelanieUtriedene()->at(i) << std::endl;
-//        }
-//        std::cout << "--------------------------------" << std::endl;
-//    }
-//    std::cout << "Nenajdene data pre: " << pocitadlo << " obci." << std::endl;
-
 
     DataLoader::nacitajVek("vek.csv", *obce, *obceKody);
-//    int pocitadloVek = 0;
-//    for (auto item: *obce)
-//    {
-//        if (item->accessData()->getVekUtriedene() == nullptr)
-//        {
-//            std::cout << "Nenajdene vek pre obec : " << item->accessData()->getOfficialTitle() << std::endl;
-//            pocitadloVek++;
-//            continue;
-//        }
-//        std::cout << "Vek pre obec :" << item->accessData()->getOfficialTitle() << std::endl;
-//        for (int i = 0; i < item->accessData()->getVekUtriedene()->size(); ++i)
-//        {
-//            std::cout << item->accessData()->getVekUtriedene()->at(i) << std::endl;
-//        }
-//        std::cout << "--------------------------------" << std::endl;
-//    }
-//    std::cout << "Nenajdene data pre: " << pocitadloVek << " obci." << std::endl;
-//
-//
-//    for (auto item: *okresy)
-//    {
-//        std::cout << item->accessData()->getOfficialTitle() << " - ";
-//        for (int i = 0; i < item->accessData()->getVyssiUzemnyCelok()->getVekUtriedene()->size(); ++i)
-//        {
-//            std::cout << item->accessData()->getVyssiUzemnyCelok()->getVekUtriedene()->at(i) << " ";
-//        }
-//        std::cout << std::endl;
-//    }
-
-    //TODO skusit filtre, spravit triedenie a ovladanie pomocou konzole - inspirovat sa AUS console
 
 
     //TODO spravit prislusnost aj pre vyssie uzemne jednotky
-//    auto* filterPrislusnost = new FilterUzemnaJednotkaPrislusnost("Okres Trebišov");
-//
-//    auto* resultOfFilterPocet = filterPrislusnost->passStructure(*obce);
-//
-//    ShellSort<int>::sort(*resultOfFilterPocet, new CriteriumVzdelaniePocet(VYSOKOSKOLSKE), true);
-//    for (auto item: *resultOfFilterPocet)
-//    {
-//        std::cout << item->getVyssiUzemnyCelok()->getOfficialTitle() << " : " << item->getOfficialTitle() << " - " << item->getVzdelanieUtriedene()->at(VYSOKOSKOLSKE) << std::endl;
-//    }
 
     bool run = true;
     std::cout << "Vitaj v semestralnej aplikacii Petra szathmaryho!" << std::endl;
@@ -413,7 +349,7 @@ void spustiSa()
                         }
                         case 0:
                         {
-                            if (filter->getSizeOfFilters() != 0 && filter != nullptr)
+                            if (filter != nullptr && filter->getSizeOfFilters() != 0)
                             {
 
                                 ConsoleOutput::printUzemnaJednotkaTyp();
@@ -466,7 +402,7 @@ void spustiSa()
                                 delete filter;
                                 filter = nullptr;
                             }
-                            delete filter; //TODO leaky v CompositeFilter, vola sa konstruktor abstraktnej triedy
+                            delete filter;
                             filter = nullptr;
                             break;
                         }
@@ -482,7 +418,7 @@ void spustiSa()
             }
             case 3:
             {
-                //TODO triedenie
+                //triedenie
                 ConsoleOutput::printUseFilterChoice();
                 std::string choiceUseFilter = ConsoleOutput::readChoiceWord();
 
@@ -704,7 +640,7 @@ void spustiSa()
                                     }
                                     case 0:
                                     {
-                                        if (filter->getSizeOfFilters() != 0 && filter != nullptr)
+                                        if (filter != nullptr && filter->getSizeOfFilters() != 0)
                                         {
 
                                             ConsoleOutput::printUzemnaJednotkaTyp();
@@ -719,7 +655,6 @@ void spustiSa()
                                                 std::cout << "Pozor, musis zadat cislo!" << std::endl;
                                                 break;
                                             }
-                                            //TODO reuslt
                                             switch (typUzemnejJednotkyInt)
                                             {
                                                 case 1:
@@ -755,7 +690,7 @@ void spustiSa()
                                             delete filter;
                                             filter = nullptr;
                                         }
-                                        delete filter; //TODO leaky v CompositeFilter, vola sa konstruktor abstraktnej triedy
+                                        delete filter;
                                         filter = nullptr;
                                         break;
                                     }
@@ -769,7 +704,6 @@ void spustiSa()
                         }
                         if (result != nullptr)
                         {
-                         //TODO moznosti podla coho triedit
                             ConsoleOutput::printTriedenieAko();
                             std::string triedenieAko = ConsoleOutput::readChoiceWord();
 
@@ -940,8 +874,6 @@ void spustiSa()
                                 }
                             }
                         }
-
-                        //TODO koniec filtrov
                         break;
                     }
                     case 2:
@@ -1566,7 +1498,6 @@ void spustiSa()
                 //rozhodnutie o aku uzemnu jednotku sa jedna
 
                 break;
-                //TODO koniec case 3
             }
             case 9:
                 run = false;

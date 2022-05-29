@@ -1,3 +1,8 @@
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //
 // Created by Peter Szathmáry on 25/05/2022.
 //
@@ -13,9 +18,6 @@
 #include "../criteriums/CriteriumVzdelaniePodiel.h"
 #include "../structures/list/ArrayListWithObject.h"
 
-// This is a personal academic project. Dear PVS-Studio, please check it.
-
-// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
 
 class FilterVzdelaniePodiel : public FilterBetween<UzemnaJednotka*, double, DuplicitySortedSequenceTable<std::string, UzemnaJednotka*>>
 {

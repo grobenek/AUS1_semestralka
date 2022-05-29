@@ -1,3 +1,8 @@
+
+// This is a personal academic project. Dear PVS-Studio, please check it.
+
+// PVS-Studio Static Code Analyzer for C, C++, C#, and Java: https://pvs-studio.com
+
 //
 // Created by Peter Szathmáry on 25/05/2022.
 //
@@ -9,14 +14,16 @@
 #include "CriteriumUzemnaJednotka.h"
 #include "CriteriumString.h"
 
-class CriteriumPrislusnost : public CriteriumString
+class CriteriumPrislusnost : public Criterium<UzemnaJednotka*, bool>
 {
+private:
+    std::string nadradenaUzemnaJednotka;
 public:
-    CriteriumPrislusnost();
+    CriteriumPrislusnost(std::string nadradenaUzemnaJednotka);
 
 private:
 public:
-    std::string evaluate(UzemnaJednotka* const& object) override;
+    bool evaluate(UzemnaJednotka* const& object) override;
 };
 
 
