@@ -13,7 +13,7 @@
 
 #include "CriteriumUzemnaJednotka.h"
 
-class CriteriumPrislusnost : public Criterium<UzemnaJednotka*, bool>
+class CriteriumPrislusnost : public CriteriumUzemnaJednotka<bool>
 {
 private:
     std::string nadradenaUzemnaJednotka;
