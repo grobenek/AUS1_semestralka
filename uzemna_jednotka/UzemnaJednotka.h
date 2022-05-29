@@ -79,7 +79,7 @@ public:
         return officialTitle;
     }
 
-    void setVzdelanieUtriedene(structures::Array<int>* pVzdelanieUtriedene)
+   virtual void setVzdelanieUtriedene(structures::Array<int>* pVzdelanieUtriedene)
     {
         delete this->vzdelanieUtriedene;
         UzemnaJednotka::vzdelanieUtriedene = pVzdelanieUtriedene;
@@ -87,12 +87,19 @@ public:
         for (int i = 0; i < pVzdelanieUtriedene->size(); ++i)
         {
             this->getVyssiUzemnyCelok()->getVzdelanieUtriedene()->at(i) += pVzdelanieUtriedene->at(i);
+            this->getVyssiUzemnyCelok()->addPocetObyvatelov(pVzdelanieUtriedene->at(i));
             this->getVyssiUzemnyCelok()->getVyssiUzemnyCelok()->getVzdelanieUtriedene()->at(i) += pVzdelanieUtriedene->at(i);
+            this->getVyssiUzemnyCelok()->getVyssiUzemnyCelok()->addPocetObyvatelov(pVzdelanieUtriedene->at(i));
             this->pocetObyvatelov += pVzdelanieUtriedene->at(i);
         }
     }
 
-    void setVekUtriedene(structures::Array<int>* pVekUtriedene)
+    void addPocetObyvatelov(int howMuch)
+    {
+        this->pocetObyvatelov += howMuch;
+    }
+
+    virtual void setVekUtriedene(structures::Array<int>* pVekUtriedene)
     {
         delete this->vekUtriedene;
         UzemnaJednotka::vekUtriedene = pVekUtriedene;

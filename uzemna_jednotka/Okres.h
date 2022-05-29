@@ -20,6 +20,10 @@ public:
 
     void pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka) override;
 
+    void setVzdelanieUtriedene(structures::Array<int>* pVzdelanieUtriedene) override;
+
+    void setVekUtriedene(structures::Array<int>* pVekUtriedene) override;
+
     structures::ArrayList<UzemnaJednotka*>* dajNizsieUzemneJednotky() override;
 };
 

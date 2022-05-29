@@ -33,7 +33,8 @@ UzemnaJednotka* Kraj::clone()
 
 void Kraj::pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka)
 {
-    auto* okres = dynamic_cast<Okres*>(uzemnaJednotka);
+    auto* okres = dynamic_cast<Okres*>(uzemnaJednotka->clone());
+    delete uzemnaJednotka;
     if (okres != nullptr)
     {
         this->nizsieUzemneJednotky->add(okres);
@@ -59,4 +60,26 @@ void Kraj::pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka)
 structures::ArrayList<UzemnaJednotka*>* Kraj::dajNizsieUzemneJednotky()
 {
     return this->nizsieUzemneJednotky;
+}
+
+void Kraj::setVzdelanieUtriedene(structures::Array<int>* pVzdelanieUtriedene)
+{
+    delete this->vzdelanieUtriedene;
+    UzemnaJednotka::vzdelanieUtriedene = pVzdelanieUtriedene;
+    this->pocetObyvatelov = 0;
+    for (int i = 0; i < pVzdelanieUtriedene->size(); ++i)
+    {
+        this->pocetObyvatelov += pVzdelanieUtriedene->at(i);
+    }
+}
+
+void Kraj::setVekUtriedene(structures::Array<int>* pVekUtriedene)
+{
+    delete this->vekUtriedene;
+    UzemnaJednotka::vekUtriedene = pVekUtriedene;
+    this->pocetObyvatelov = 0;
+    for (int i = 0; i < pVekUtriedene->size(); ++i)
+    {
+        this->pocetObyvatelov += pVekUtriedene->at(i);
+    }
 }

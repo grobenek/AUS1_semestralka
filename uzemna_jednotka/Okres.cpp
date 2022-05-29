@@ -22,18 +22,19 @@ Okres::Okres(const std::string& code, const std::string& officialTitle, const st
 UzemnaJednotka* Okres::clone()
 {
     auto* clone = new Okres(this->code, this->officialTitle, this->mediumTitle, this->shortTitle, this->note);
+    clone->setVyssiUzemnyCelok(this->getVyssiUzemnyCelok());
     if (this->vekUtriedene != nullptr && this->vzdelanieUtriedene != nullptr && this->pocetObyvatelov != 0)
     {
         clone->setVekUtriedene(new structures::Array<int>(*this->vekUtriedene));
-        clone->setVzdelanieUtriedene(new structures::Array<int>(*this->getVzdelanieUtriedene()));
+        clone->setVzdelanieUtriedene(new structures::Array<int>(*this->vzdelanieUtriedene));
     }
-    clone->setVyssiUzemnyCelok(this->getVyssiUzemnyCelok());
     return clone;
 }
 
 void Okres::pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka)
 {
-    auto* obec = dynamic_cast<Obec*>(uzemnaJednotka);
+    auto* obec = dynamic_cast<Obec*>(uzemnaJednotka->clone());
+    delete uzemnaJednotka;
     if (obec != nullptr)
     {
         this->nizsieUzemneJednotky->add(obec);
@@ -46,6 +47,7 @@ void Okres::pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka)
             for (int i = 0; i < this->getVzdelanieUtriedene()->size(); ++i)
             {
                 this->vzdelanieUtriedene->at(i) += obec->getVzdelanieUtriedene()->at(i);
+                this->pocetObyvatelov += this->vzdelanieUtriedene->at(i);
             }
 
             for (int i = 0; i < this->getVekUtriedene()->size(); ++i)
@@ -62,4 +64,28 @@ void Okres::pridajNizsiuUzemnuJednotku(UzemnaJednotka* uzemnaJednotka)
 structures::ArrayList<UzemnaJednotka*>* Okres::dajNizsieUzemneJednotky()
 {
     return this->nizsieUzemneJednotky;
+}
+
+void Okres::setVzdelanieUtriedene(structures::Array<int>* pVzdelanieUtriedene)
+{
+    delete this->vzdelanieUtriedene;
+    UzemnaJednotka::vzdelanieUtriedene = pVzdelanieUtriedene;
+    this->pocetObyvatelov = 0;
+    for (int i = 0; i < pVzdelanieUtriedene->size(); ++i)
+    {
+        this->getVyssiUzemnyCelok()->getVzdelanieUtriedene()->at(i) += pVzdelanieUtriedene->at(i);
+        this->pocetObyvatelov += pVzdelanieUtriedene->at(i);
+    }
+}
+
+void Okres::setVekUtriedene(structures::Array<int>* pVekUtriedene)
+{
+    delete this->vekUtriedene;
+    UzemnaJednotka::vekUtriedene = pVekUtriedene;
+    this->pocetObyvatelov = 0;
+    for (int i = 0; i < pVekUtriedene->size(); ++i)
+    {
+        this->getVyssiUzemnyCelok()->getVekUtriedene()->at(i) += pVekUtriedene->at(i);
+        this->pocetObyvatelov += pVekUtriedene->at(i);
+    }
 }

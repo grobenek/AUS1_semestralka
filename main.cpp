@@ -120,7 +120,6 @@ void spustiSa()
 //        std::cout << item->getVyssiUzemnyCelok()->getOfficialTitle() << " : " << item->getOfficialTitle() << " - " << item->getVzdelanieUtriedene()->at(VYSOKOSKOLSKE) << std::endl;
 //    }
 
-
     bool run = true;
     std::cout << "Vitaj v semestralnej aplikacii Petra szathmaryho!" << std::endl;
     do
